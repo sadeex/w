@@ -4,90 +4,126 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Post — Liger Co</title>
-
-<!-- 🔸 AD: Direct script #1 (site-wide) -->
-<script src="https://pl29666913.effectivecpmnetwork.com/dd/3e/63/dd3e63cb85c7f37892c476ea203734ac.js"></script>
+<link rel="icon" type="image/png" href="lion-logo.png">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',system-ui,-apple-system,sans-serif}
 :root{
-  --red:#ff0033;--red2:#ff4d6d;--purple:#7b2cff;
-  --dark:#0a0a14;--card:#13131f;--card2:#1a1a2a;
-  --text:#f1f1f7;--muted:#9a9ab0;--border:rgba(255,255,255,.08);
+  --gold:#d4af37;--gold2:#f5d061;--gold3:#b8860b;
+  --dark:#07070d;--text:#f5f3ec;--muted:#a8a294;
+  --glass:rgba(255,255,255,.06);
+  --glass2:rgba(255,255,255,.09);
+  --gborder:rgba(255,255,255,.14);
+  --gold-border:rgba(212,175,55,.35);
 }
 body{background:var(--dark);color:var(--text);min-height:100vh;overflow-x:hidden}
 
-.bg-glow{position:fixed;inset:0;z-index:-2;
-  background:
-    radial-gradient(ellipse 60% 40% at 15% 10%, rgba(255,0,51,.16), transparent 60%),
-    radial-gradient(ellipse 50% 40% at 85% 90%, rgba(123,44,255,.14), transparent 60%);
-  animation:bgShift 14s ease-in-out infinite alternate}
-@keyframes bgShift{0%{filter:hue-rotate(0deg) brightness(1)}100%{filter:hue-rotate(40deg) brightness(1.3)}}
-.particle{position:fixed;border-radius:50%;z-index:-1;bottom:-20px;background:rgba(255,0,51,.3);animation:floatUp linear infinite}
-@keyframes floatUp{0%{transform:translateY(0) scale(1);opacity:0}10%{opacity:.7}90%{opacity:.3}100%{transform:translateY(-110vh) scale(.3);opacity:0}}
+.bg{position:fixed;inset:0;z-index:-3;background:
+  radial-gradient(ellipse 70% 50% at 20% 0%, rgba(212,175,55,.13), transparent 55%),
+  radial-gradient(ellipse 60% 45% at 85% 100%, rgba(184,134,11,.12), transparent 55%),
+  linear-gradient(160deg,#0a0a12 0%,#07070d 50%,#0c0a08 100%)}
+.blob{position:fixed;border-radius:50%;filter:blur(90px);z-index:-2;opacity:.5;animation:blobFloat 18s ease-in-out infinite alternate}
+.blob.b1{width:420px;height:420px;background:rgba(212,175,55,.16);top:-120px;left:-100px}
+.blob.b2{width:380px;height:380px;background:rgba(245,208,97,.10);bottom:-100px;right:-80px;animation-delay:-6s;animation-duration:22s}
+@keyframes blobFloat{0%{transform:translate(0,0) scale(1)}50%{transform:translate(60px,-40px) scale(1.15)}100%{transform:translate(-40px,50px) scale(.92)}}
+.spark{position:fixed;border-radius:50%;z-index:-1;bottom:-20px;background:rgba(245,208,97,.5);box-shadow:0 0 6px rgba(245,208,97,.8);animation:sparkUp linear infinite}
+@keyframes sparkUp{0%{transform:translateY(0) scale(1);opacity:0}10%{opacity:.9}90%{opacity:.3}100%{transform:translateY(-110vh) scale(.2);opacity:0}}
 
-.navbar{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;
-  padding:14px 22px;background:rgba(10,10,20,.75);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
-  border-bottom:1px solid var(--border);animation:fadeDown .7s ease both}
-@keyframes fadeDown{from{opacity:0;transform:translateY(-25px)}to{opacity:1;transform:translateY(0)}}
-.logo{display:flex;align-items:center;gap:10px;text-decoration:none;font-size:1.25rem;font-weight:800;color:var(--text)}
-.logo-icon{width:38px;height:38px;border-radius:11px;flex-shrink:0;background:linear-gradient(135deg,var(--red),var(--purple));
-  display:flex;align-items:center;justify-content:center;box-shadow:0 0 18px rgba(255,0,51,.5);animation:logoPulse 2.5s ease-in-out infinite}
-@keyframes logoPulse{0%,100%{box-shadow:0 0 12px rgba(255,0,51,.45);transform:rotate(0)}50%{box-shadow:0 0 26px rgba(255,0,51,.8);transform:rotate(-4deg)}}
-.logo-text{background:linear-gradient(90deg,#fff,var(--red2),#fff);background-size:200% auto;
-  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:shine 4s linear infinite}
-@keyframes shine{to{background-position:200% center}}
-.nav-links{display:flex;align-items:center;gap:10px}
-.nav-btn{text-decoration:none;color:var(--muted);font-weight:600;font-size:.9rem;padding:9px 18px;border-radius:50px;transition:all .3s;border:1px solid transparent}
-.nav-btn:hover{color:#fff;background:rgba(255,255,255,.07);border-color:var(--border)}
-.nav-btn.admin{color:#fff;border:1px solid rgba(255,0,51,.5);background:rgba(255,0,51,.1)}
-.nav-btn.admin:hover{background:var(--red);box-shadow:0 0 20px rgba(255,0,51,.5);transform:translateY(-2px)}
+.navbar{position:sticky;top:12px;z-index:100;display:flex;align-items:center;justify-content:space-between;
+  margin:12px auto 0;max-width:1200px;width:calc(100% - 24px);
+  padding:10px 18px;border-radius:24px;
+  background:linear-gradient(135deg,rgba(255,255,255,.10),rgba(255,255,255,.03));
+  backdrop-filter:blur(24px) saturate(160%);-webkit-backdrop-filter:blur(24px) saturate(160%);
+  border:1px solid var(--gborder);
+  box-shadow:0 8px 32px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.18);
+  animation:navIn .8s cubic-bezier(.2,.9,.3,1.2) both}
+@keyframes navIn{from{opacity:0;transform:translateY(-30px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}
+.logo{display:flex;align-items:center;gap:12px;text-decoration:none;font-size:1.3rem;font-weight:800;color:var(--text)}
+.logo-img{width:46px;height:46px;border-radius:50%;object-fit:cover;flex-shrink:0;
+  border:2px solid var(--gold-border);
+  box-shadow:0 0 18px rgba(212,175,55,.5);animation:lionGlow 3s ease-in-out infinite}
+@keyframes lionGlow{0%,100%{box-shadow:0 0 12px rgba(212,175,55,.4)}50%{box-shadow:0 0 28px rgba(245,208,97,.8)}}
+.logo-text{background:linear-gradient(100deg,#f5d061 0%,#fffbe6 25%,#d4af37 50%,#fffbe6 75%,#f5d061 100%);
+  background-size:200% auto;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  animation:goldShine 3.5s linear infinite;letter-spacing:.5px}
+@keyframes goldShine{to{background-position:200% center}}
+.nav-links{display:flex;align-items:center;gap:8px}
+.nav-btn{text-decoration:none;color:var(--muted);font-weight:600;font-size:.88rem;padding:9px 18px;border-radius:50px;transition:all .35s;border:1px solid transparent}
+.nav-btn:hover{color:#fff;background:var(--glass2);border-color:var(--gborder)}
+.nav-btn.admin{color:#0d0b06;font-weight:800;background:linear-gradient(135deg,var(--gold2),var(--gold));
+  box-shadow:0 4px 18px rgba(212,175,55,.4), inset 0 1px 0 rgba(255,255,255,.5)}
+.nav-btn.admin:hover{transform:translateY(-2px) scale(1.04);box-shadow:0 8px 28px rgba(212,175,55,.6)}
 
 .page{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 180px;gap:24px;padding:20px}
 .main-col{min-width:0}
 
-.ad-slot{display:flex;flex-direction:column;align-items:center;justify-content:center;margin:24px auto;max-width:100%;overflow:hidden;animation:fadeIn 1.2s ease both}
+.ad-slot{display:flex;flex-direction:column;align-items:center;margin:26px auto;max-width:100%;overflow:hidden;animation:fadeIn 1.3s ease both}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
-.ad-label{text-align:center;font-size:.6rem;letter-spacing:3px;color:#50506a;text-transform:uppercase;margin-bottom:5px}
+.ad-label{font-size:.58rem;letter-spacing:3px;color:#5a5648;text-transform:uppercase;margin-bottom:6px}
+.ad-glass{padding:10px;border-radius:20px;
+  background:linear-gradient(135deg,rgba(255,255,255,.07),rgba(255,255,255,.02));
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border:1px solid var(--gborder);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.12), 0 10px 30px rgba(0,0,0,.35)}
 .ad-468{display:flex;justify-content:center}
 
-.post-view-head{padding:26px 0 6px;animation:fadeDown .8s ease both}
-.post-view-head h1{font-size:clamp(1.3rem,4vw,2rem);line-height:1.4}
+.post-hero-img{width:100%;max-height:440px;object-fit:cover;border-radius:26px;margin-top:22px;display:none;
+  border:1px solid var(--gold-border);
+  box-shadow:0 22px 55px rgba(0,0,0,.55), 0 0 40px rgba(212,175,55,.12);
+  animation:imgIn 1s cubic-bezier(.2,.9,.3,1.15) both}
+@keyframes imgIn{from{opacity:0;transform:translateY(35px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}
+.post-view-head{padding:28px 0 6px;animation:headIn .9s cubic-bezier(.2,.9,.3,1.1) both}
+@keyframes headIn{from{opacity:0;transform:translateY(-25px)}to{opacity:1;transform:translateY(0)}}
+.post-view-head h1{font-size:clamp(1.3rem,4vw,2rem);line-height:1.4;
+  background:linear-gradient(100deg,#fffbe6,#f5d061,#fffbe6);background-size:200% auto;
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  animation:goldShine 5s linear infinite}
 .post-view-head .date{color:var(--muted);font-size:.85rem;margin-top:10px}
-.post-frame{width:100%;border:1px solid var(--border);border-radius:18px;background:#0e0e1a;
-  min-height:75vh;margin-top:18px;animation:cardUp .9s ease both;box-shadow:0 25px 60px rgba(0,0,0,.5)}
-@keyframes cardUp{from{opacity:0;transform:translateY(40px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}
+
+.post-frame{width:100%;border-radius:26px;min-height:75vh;margin-top:20px;
+  background:rgba(10,10,16,.6);
+  border:1px solid var(--gborder);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.1), 0 25px 60px rgba(0,0,0,.5);
+  animation:frameUp 1s cubic-bezier(.2,.9,.3,1.15) both}
+@keyframes frameUp{from{opacity:0;transform:translateY(45px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}
 
 .loader{display:flex;justify-content:center;padding:60px 0}
-.spinner{width:48px;height:48px;border-radius:50%;border:4px solid rgba(255,0,51,.15);border-top-color:var(--red);animation:spin .8s linear infinite}
+.spinner{width:50px;height:50px;border-radius:50%;border:3px solid rgba(212,175,55,.15);border-top-color:var(--gold2);animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;
-  padding:14px 32px;border-radius:50px;border:1px solid var(--border);cursor:pointer;
-  font-size:1rem;font-weight:600;color:var(--muted);text-decoration:none;background:transparent;transition:all .3s}
-.btn:hover{color:#fff;border-color:rgba(255,0,51,.5);background:rgba(255,0,51,.08);transform:translateY(-2px)}
+  padding:13px 32px;border-radius:50px;cursor:pointer;font-size:.95rem;font-weight:700;
+  color:var(--text);text-decoration:none;
+  background:linear-gradient(135deg,rgba(255,255,255,.10),rgba(255,255,255,.03));
+  backdrop-filter:blur(14px);border:1px solid var(--gborder);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.15);transition:all .35s}
+.btn:hover{border-color:var(--gold-border);color:var(--gold2);transform:translateY(-3px);
+  box-shadow:0 10px 30px rgba(212,175,55,.2), inset 0 1px 0 rgba(255,255,255,.15)}
 
-.sidebar{display:flex;flex-direction:column;align-items:center;animation:fadeIn 1.5s ease both}
-.sidebar-sticky{position:sticky;top:80px}
+.sidebar{display:flex;flex-direction:column;align-items:center;animation:fadeIn 1.6s ease both}
+.sidebar-sticky{position:sticky;top:90px}
 
-footer{text-align:center;padding:34px 16px;color:#50506a;font-size:.8rem;border-top:1px solid var(--border);margin-top:40px}
-footer .f-logo{font-weight:800;color:var(--muted);margin-bottom:6px}
+footer{text-align:center;padding:36px 16px;color:#5a5648;font-size:.8rem;margin-top:46px;border-top:1px solid rgba(255,255,255,.07)}
+footer img{width:42px;height:42px;border-radius:50%;object-fit:cover;border:2px solid var(--gold-border);margin-bottom:10px;opacity:.85}
+footer .f-logo{font-weight:800;color:var(--gold);margin-bottom:4px;letter-spacing:1px}
 
 @media(max-width:1000px){.page{grid-template-columns:1fr}.sidebar{display:none}}
 @media(max-width:560px){
-  .ad-468{transform:scale(.68);transform-origin:center top;height:46px}
-  .navbar{padding:12px 14px}.logo{font-size:1.05rem}
-  .nav-btn{padding:8px 14px;font-size:.82rem}
+  .ad-468{transform:scale(.66);transform-origin:center top;height:44px}
+  .navbar{padding:8px 12px;top:8px}
+  .logo{font-size:1.05rem}.logo-img{width:38px;height:38px}
+  .nav-btn{padding:8px 13px;font-size:.8rem}
 }
 </style>
 </head>
 <body>
 
-<div class="bg-glow"></div>
+<div class="bg"></div>
+<div class="blob b1"></div><div class="blob b2"></div>
 
 <nav class="navbar">
   <a class="logo" href="index.html">
-    <span class="logo-icon">🦁</span>
+    <img class="logo-img" src="lion-logo.png" alt="Liger Co">
     <span class="logo-text">Liger&nbsp;Co</span>
   </a>
   <div class="nav-links">
@@ -99,20 +135,22 @@ footer .f-logo{font-weight:800;color:var(--muted);margin-bottom:6px}
 <div class="page">
   <div class="main-col">
 
-    <!-- 🔸 AD #1: 468x60 Banner — top -->
+    <!-- 🔸 AD #1: 468x60 Banner -->
     <div class="ad-slot">
       <div class="ad-label">Advertisement</div>
-      <div class="ad-468">
-        <script type="text/javascript">
-          atOptions = {
-            'key' : '0b2e503c86caa51df286e1aec28ec081',
-            'format' : 'iframe',
-            'height' : 60,
-            'width' : 468,
-            'params' : {}
-          };
-        </script>
-        <script type="text/javascript" src="https://www.highperformanceformat.com/0b2e503c86caa51df286e1aec28ec081/invoke.js"></script>
+      <div class="ad-glass">
+        <div class="ad-468">
+          <script type="text/javascript">
+            atOptions = {
+              'key' : '0b2e503c86caa51df286e1aec28ec081',
+              'format' : 'iframe',
+              'height' : 60,
+              'width' : 468,
+              'params' : {}
+            };
+          </script>
+          <script type="text/javascript" src="https://www.highperformanceformat.com/0b2e503c86caa51df286e1aec28ec081/invoke.js"></script>
+        </div>
       </div>
     </div>
 
@@ -121,23 +159,28 @@ footer .f-logo{font-weight:800;color:var(--muted);margin-bottom:6px}
       <div class="date" id="postDate"></div>
     </div>
 
+    <img id="postHeroImg" class="post-hero-img" alt="">
+
+
     <div id="loader" class="loader"><div class="spinner"></div></div>
     <iframe id="postFrame" class="post-frame" style="display:none" frameborder="0"></iframe>
 
     <!-- 🔸 AD #2: 300x250 Box -->
     <div class="ad-slot">
       <div class="ad-label">Advertisement</div>
-      <div style="display:flex;justify-content:center">
-        <script type="text/javascript">
-          atOptions = {
-            'key' : 'aaa44a0bb679d29eef80945e6650a585',
-            'format' : 'iframe',
-            'height' : 250,
-            'width' : 300,
-            'params' : {}
-          };
-        </script>
-        <script type="text/javascript" src="https://www.highperformanceformat.com/aaa44a0bb679d29eef80945e6650a585/invoke.js"></script>
+      <div class="ad-glass">
+        <div style="display:flex;justify-content:center">
+          <script type="text/javascript">
+            atOptions = {
+              'key' : 'aaa44a0bb679d29eef80945e6650a585',
+              'format' : 'iframe',
+              'height' : 250,
+              'width' : 300,
+              'params' : {}
+            };
+          </script>
+          <script type="text/javascript" src="https://www.highperformanceformat.com/aaa44a0bb679d29eef80945e6650a585/invoke.js"></script>
+        </div>
       </div>
     </div>
 
@@ -157,28 +200,28 @@ footer .f-logo{font-weight:800;color:var(--muted);margin-bottom:6px}
   <!-- 160x600 (desktop only) -->
   <aside class="sidebar">
     <div class="sidebar-sticky">
-      <div class="ad-label">Advertisement</div>
-      <script type="text/javascript">
-        atOptions = {
-          'key' : '37c0de8bcbb0d2352507c8b7938725ff',
-          'format' : 'iframe',
-          'height' : 600,
-          'width' : 160,
-          'params' : {}
-        };
-      </script>
-      <script type="text/javascript" src="https://www.highperformanceformat.com/37c0de8bcbb0d2352507c8b7938725ff/invoke.js"></script>
+      <div class="ad-label" style="text-align:center">Advertisement</div>
+      <div class="ad-glass">
+        <script type="text/javascript">
+          atOptions = {
+            'key' : '37c0de8bcbb0d2352507c8b7938725ff',
+            'format' : 'iframe',
+            'height' : 600,
+            'width' : 160,
+            'params' : {}
+          };
+        </script>
+        <script type="text/javascript" src="https://www.highperformanceformat.com/37c0de8bcbb0d2352507c8b7938725ff/invoke.js"></script>
+      </div>
     </div>
   </aside>
 </div>
 
 <footer>
-  <div class="f-logo">🦁 Liger Co</div>
+  <img src="lion-logo.png" alt="Liger Co"><br>
+  <div class="f-logo">LIGER CO</div>
   © 2026 Liger Co — All rights reserved.
 </footer>
-
-<!-- 🔸 AD: Direct script #2 -->
-<script src="https://pl29666915.effectivecpmnetwork.com/14/30/5d/14305d8437d7a192d411b4a39620aacb.js"></script>
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
@@ -196,11 +239,11 @@ footer .f-logo{font-weight:800;color:var(--muted);margin-bottom:6px}
   };
   const db = getFirestore(initializeApp(firebaseConfig));
 
-  for(let i=0;i<16;i++){
-    const p=document.createElement('div');p.className='particle';
-    const s=Math.random()*5+2;p.style.width=p.style.height=s+'px';
+  for(let i=0;i<18;i++){
+    const p=document.createElement('div');p.className='spark';
+    const s=Math.random()*4+1.5;p.style.width=p.style.height=s+'px';
     p.style.left=Math.random()*100+'vw';
-    p.style.animationDuration=(Math.random()*12+8)+'s';
+    p.style.animationDuration=(Math.random()*13+9)+'s';
     p.style.animationDelay=(Math.random()*10)+'s';
     document.body.appendChild(p);
   }
@@ -228,6 +271,12 @@ footer .f-logo{font-weight:800;color:var(--muted);margin-bottom:6px}
           dateEl.textContent='📅 '+post.createdAt.toDate().toLocaleString('en-GB',
             {day:'numeric',month:'long',year:'numeric',hour:'2-digit',minute:'2-digit'});
         }
+        if(post.image){
+          const heroImg=document.getElementById('postHeroImg');
+          heroImg.src=post.image;
+          heroImg.style.display='block';
+          heroImg.onerror=()=>{heroImg.style.display='none'};
+        }
         frame.style.display='block';
         frame.srcdoc=post.html||'<p style="color:#888;font-family:sans-serif;padding:20px">Empty post</p>';
         frame.onload=()=>{
@@ -245,5 +294,5 @@ footer .f-logo{font-weight:800;color:var(--muted);margin-bottom:6px}
   }
 </script>
 
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a0959e9d6ca2193f',t:'MTc4MTA2NTYwNA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a095e413393271b2',t:'MTc4MTA2ODQ0OQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
