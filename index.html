@@ -6,6 +6,9 @@
 <title>Liger Co — Latest Posts</title>
 <link rel="icon" type="image/png" href="lion-logo.png">
 
+<!-- 🔸 AD: Direct script #1 (site-wide popunder) -->
+<script src="https://pl29666913.effectivecpmnetwork.com/dd/3e/63/dd3e63cb85c7f37892c476ea203734ac.js"></script>
+
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',system-ui,-apple-system,sans-serif}
 :root{
@@ -113,12 +116,12 @@ body{background:var(--dark);color:var(--text);min-height:100vh;overflow-x:hidden
 .section-title::after{content:'';flex:1;height:1.5px;border-radius:2px;background:linear-gradient(90deg,var(--gold),transparent)}
 .posts-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:22px}
 
-.post-thumb{width:calc(100% + 52px);margin:-26px -26px 2px;aspect-ratio:16/9;object-fit:cover;display:block;
-  border-bottom:1px solid var(--gborder);
+.post-thumb{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;
   transition:transform .6s cubic-bezier(.2,.8,.2,1), filter .6s}
 .post-card:hover .post-thumb{transform:scale(1.06);filter:brightness(1.1) saturate(1.15)}
-.thumb-wrap{overflow:hidden;border-radius:26px 26px 0 0;margin:-26px -26px 2px;width:calc(100% + 52px)}
-.thumb-wrap .post-thumb{width:100%;margin:0}
+.thumb-wrap{overflow:hidden;border-radius:26px 26px 0 0;margin:-26px -26px 2px;width:calc(100% + 52px);
+  border-bottom:1px solid var(--gborder)}
+
 .post-card{position:relative;overflow:hidden;padding:26px;border-radius:26px;cursor:pointer;
   text-decoration:none;color:var(--text);display:flex;flex-direction:column;gap:13px;
   background:linear-gradient(135deg,rgba(255,255,255,.09),rgba(255,255,255,.025));
@@ -201,7 +204,7 @@ footer .f-logo{font-weight:800;color:var(--gold);margin-bottom:4px;letter-spacin
       <p>Latest videos &amp; exclusive posts — updated every day, free for everyone</p>
     </section>
 
-    <!-- 🔸 AD #1: 468x60 Banner -->
+    <!-- 🔸 AD #1: 468x60 Banner — top (mobile auto-scales) -->
     <div class="ad-slot">
       <div class="ad-label">Advertisement</div>
       <div class="ad-glass">
@@ -229,7 +232,7 @@ footer .f-logo{font-weight:800;color:var(--gold);margin-bottom:4px;letter-spacin
       <p>Check back soon — new content is on the way!</p>
     </div>
 
-    <!-- 🔸 AD #2: 300x250 Box -->
+    <!-- 🔸 AD #2: 300x250 Box — below posts (perfect for mobile) -->
     <div class="ad-slot">
       <div class="ad-label">Advertisement</div>
       <div class="ad-glass">
@@ -248,7 +251,7 @@ footer .f-logo{font-weight:800;color:var(--gold);margin-bottom:4px;letter-spacin
       </div>
     </div>
 
-    <!-- 🔸 AD #3: Native banner -->
+    <!-- 🔸 AD #3: Native banner — bottom, blends with content -->
     <div class="ad-slot">
       <div class="ad-label">Sponsored Content</div>
       <script async="async" data-cfasync="false" src="https://pl29666914.effectivecpmnetwork.com/3d746d146b076df722c2f681fdd15e79/invoke.js"></script>
@@ -257,7 +260,7 @@ footer .f-logo{font-weight:800;color:var(--gold);margin-bottom:4px;letter-spacin
 
   </div>
 
-  <!-- 160x600 (desktop only) -->
+  <!-- 🔸 AD #4: 160x600 Skyscraper — sticky sidebar (desktop only, hidden on mobile) -->
   <aside class="sidebar">
     <div class="sidebar-sticky">
       <div class="ad-label" style="text-align:center">Advertisement</div>
@@ -282,6 +285,9 @@ footer .f-logo{font-weight:800;color:var(--gold);margin-bottom:4px;letter-spacin
   <div class="f-logo">LIGER CO</div>
   © 2026 Liger Co — All rights reserved.
 </footer>
+
+<!-- 🔸 AD: Direct script #2 (site-wide popunder) -->
+<script src="https://pl29666915.effectivecpmnetwork.com/14/30/5d/14305d8437d7a192d411b4a39620aacb.js"></script>
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
@@ -327,7 +333,7 @@ footer .f-logo{font-weight:800;color:var(--gold);margin-bottom:4px;letter-spacin
       const excerpt=stripHtml(post.html||'').slice(0,140)||'Click to view this post…';
       const card=document.createElement('a');
       card.className='post-card';
-      card.href='post.html?id='+d.id;
+      card.href='post.html?id='+d.id;   /* ← unique URL per post */
       const thumbHtml = post.image
         ? `<div class="thumb-wrap"><img class="post-thumb" src="${post.image.replace(/"/g,'&quot;')}" alt="" loading="lazy" onerror="this.parentElement.style.display='none'"></div>`
         : '';
@@ -349,5 +355,5 @@ footer .f-logo{font-weight:800;color:var(--gold);margin-bottom:4px;letter-spacin
   }
 </script>
 
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a095e322ba6035ec',t:'MTc4MTA2ODQxMQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</body>
 </html>
