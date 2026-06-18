@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+  <script src="https://hecticwelcomingassociation.com/dd/3e/63/dd3e63cb85c7f37892c476ea203734ac.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Product — Liger Co</title>
+
+
+<script>
+  (function(){
+    var saved = localStorage.getItem('theme');
+    var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.setAttribute('data-theme', saved || (prefersDark ? 'dark' : 'light'));
+  })();
+</script>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Georgia,'Times New Roman',serif}
+:root{
+  --bg:#ffffff;
+  --text:#111111;
+  --muted:#555555;
+  --surface:#f7f7f7;
+  --surface2:#ffffff;
+  --border:#d8d8d8;
+  --accent:#000000;
+  --accentText:#ffffff;
+}
+html[data-theme="dark"]{
+  --bg:#050505;
+  --text:#f5f5f5;
+  --muted:#b8b8b8;
+  --surface:#111111;
+  --surface2:#0b0b0b;
+  --border:#333333;
+  --accent:#ffffff;
+  --accentText:#000000;
+}
+*{animation:none!important;transition:none!important}
+html{scroll-behavior:auto}
+body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;line-height:1.6}
+.navbar{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;gap:16px;max-width:1180px;margin:0 auto;padding:16px 20px;background:var(--bg);border-bottom:1px solid var(--border)}
+.logo{display:flex;align-items:center;text-decoration:none;color:var(--text);font-size:1.35rem;font-weight:700;letter-spacing:.5px}
+.logo-text{color:var(--text);-webkit-text-fill-color:currentColor;background:none;letter-spacing:.5px}
+.nav-links{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+.nav-btn,.theme-toggle{appearance:none;text-decoration:none;color:var(--text);background:transparent;border:1px solid var(--border);border-radius:0;padding:8px 14px;font-size:.9rem;font-weight:600;cursor:pointer;font-family:inherit}
+.nav-btn:hover,.theme-toggle:hover{background:var(--accent);color:var(--accentText);border-color:var(--accent)}
+.nav-btn.admin{background:var(--accent);color:var(--accentText);border-color:var(--accent)}
+.page{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr) 180px;gap:26px;padding:24px 20px}
+.main-col{min-width:0}
+.hero{text-align:center;padding:36px 12px 24px;border-bottom:1px solid var(--border);margin-bottom:20px}
+.badge{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border:1px solid var(--border);font-size:.75rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);background:var(--surface)}
+.live-dot{width:7px;height:7px;border-radius:50%;background:var(--accent);display:inline-block}
+.hero h1{margin-top:16px;font-size:clamp(1.8rem,4vw,3rem);font-weight:700;letter-spacing:.2px;color:var(--text);background:none;-webkit-text-fill-color:currentColor}
+.hero p{color:var(--muted);margin-top:10px;font-size:1rem}
+.ad-slot{display:flex;flex-direction:column;align-items:center;margin:24px auto;max-width:100%;overflow:hidden}
+.ad-label{font-size:.62rem;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:6px}
+.ad-glass{padding:10px;background:var(--surface);border:1px solid var(--border)}
+.ad-468,.ad-728,.ad-160x300{display:flex;justify-content:center}.ad-320-mobile{display:none;justify-content:center}
+.section-title{display:flex;align-items:center;gap:14px;margin:28px 0 18px;font-size:1.3rem;font-weight:700;color:var(--text)}
+.section-title::after{content:'';flex:1;height:1px;background:var(--border)}
+.posts-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px}
+.post-card{position:relative;overflow:hidden;padding:22px;text-decoration:none;color:var(--text);display:flex;flex-direction:column;gap:12px;background:var(--surface2);border:1px solid var(--border)}
+.post-card:hover{border-color:var(--accent)}
+.thumb-wrap{overflow:hidden;margin:-22px -22px 4px;width:calc(100% + 44px);border-bottom:1px solid var(--border)}
+.post-thumb{width:100%;aspect-ratio:16/9;object-fit:cover;display:block}
+.post-card h3{font-size:1.08rem;font-weight:700;line-height:1.4}
+.post-card .excerpt{color:var(--muted);font-size:.9rem;line-height:1.65;flex:1;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.post-meta{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:.8rem;color:var(--muted);border-top:1px solid var(--border);padding-top:10px}.read-more{color:var(--text);font-weight:700}
+.empty-state{text-align:center;padding:48px 20px;color:var(--muted);background:var(--surface);border:1px solid var(--border)}.empty-state .big{font-size:2.2rem;margin-bottom:10px;display:inline-block}
+.loader{display:flex;justify-content:center;padding:40px 0}.spinner{width:auto;height:auto;border:0;color:var(--muted)}.spinner::after{content:'Loading...'}
+.sidebar{display:flex;flex-direction:column;align-items:center}.sidebar-sticky{position:sticky;top:88px}
+footer{text-align:center;padding:30px 16px;color:var(--muted);font-size:.85rem;margin-top:36px;border-top:1px solid var(--border)}footer img{display:none!important}footer .f-logo{font-weight:700;color:var(--text);margin-bottom:4px;letter-spacing:1px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:11px 24px;border:1px solid var(--accent);cursor:pointer;font-size:.95rem;font-weight:700;color:var(--accentText);background:var(--accent);text-decoration:none;font-family:inherit}.btn:hover{opacity:.85}.btn.ghost{background:transparent;color:var(--text);border-color:var(--border)}.btn.ghost:hover{background:var(--accent);color:var(--accentText);border-color:var(--accent)}.btn.small{padding:8px 16px;font-size:.85rem}
+@media(max-width:1000px){.page{grid-template-columns:1fr}.sidebar{display:none}}
+@media(max-width:760px){.ad-728{display:none}.ad-320-mobile{display:flex}}
+@media(max-width:560px){.navbar{align-items:flex-start;padding:12px 14px}.logo{font-size:1.15rem}.nav-links{gap:6px}.nav-btn,.theme-toggle{padding:7px 10px;font-size:.78rem}.ad-468{transform:scale(.66);transform-origin:center top;height:44px}.posts-grid{grid-template-columns:1fr}.page{padding:18px 14px}}
+.post-hero-img{width:100%;max-height:420px;object-fit:cover;margin-top:18px;display:none;border:1px solid var(--border)}
+.post-view-head{padding:26px 0 6px;border-bottom:1px solid var(--border)}.post-view-head h1{font-size:clamp(1.35rem,4vw,2.1rem);line-height:1.35;color:var(--text);background:none;-webkit-text-fill-color:currentColor}.post-view-head .date{color:var(--muted);font-size:.85rem;margin-top:8px}
+.post-frame{width:100%;min-height:75vh;margin-top:20px;background:var(--surface2);border:1px solid var(--border)}
+.action-wrap{margin:18px 0;text-align:center}.action-btn{display:inline-flex;padding:12px 26px;border:1px solid var(--accent);background:var(--accent);color:var(--accentText);font-weight:700;text-decoration:none}
+.price-tag{color:var(--text)}
+
+</style>
+</head>
+<body>
+<nav class="navbar">
+  <a class="logo" href="index.html">
+<span class="logo-text">Liger&nbsp;Co</span>
+  </a>
+  <div class="nav-links">
+    <button class="theme-toggle" id="themeToggle" type="button">Theme</button>
+    <a class="nav-btn" href="index.html">🏠 Home</a>
+    <a class="nav-btn admin" href="admin.html">🔐 Admin</a>
+  </div>
+</nav>
+
+<div class="page">
+  <div class="main-col">
+
+    <!-- 🔸 AD: Responsive leaderboard — 728x90 desktop / 320x50 mobile -->
+    <div class="ad-slot">
+      <div class="ad-label">Advertisement</div>
+      <div class="ad-glass">
+        <div class="ad-728">
+          <script type="text/javascript">
+            atOptions = {
+              'key' : '95d3fd13a0cec5c1e954baa9e910f951',
+              'format' : 'iframe',
+              'height' : 90,
+              'width' : 728,
+              'params' : {}
+            };
+          </script>
+          <script type="text/javascript" src="https://hecticwelcomingassociation.com/95d3fd13a0cec5c1e954baa9e910f951/invoke.js"></script>
+        </div>
+        <div class="ad-320-mobile">
+          <script type="text/javascript">
+            atOptions = {
+              'key' : '163e208599fb1cbb5ecdb28509cbaed5',
+              'format' : 'iframe',
+              'height' : 50,
+              'width' : 320,
+              'params' : {}
+            };
+          </script>
+          <script type="text/javascript" src="https://hecticwelcomingassociation.com/163e208599fb1cbb5ecdb28509cbaed5/invoke.js"></script>
+        </div>
+      </div>
+    </div>
+
+    <!-- 🔸 AD #1: 468x60 Banner — top (mobile auto-scales) -->
+    <div class="ad-slot">
+      <div class="ad-label">Advertisement</div>
+      <div class="ad-glass">
+        <div class="ad-468">
+          <script type="text/javascript">
+            atOptions = {
+              'key' : '0b2e503c86caa51df286e1aec28ec081',
+              'format' : 'iframe',
+              'height' : 60,
+              'width' : 468,
+              'params' : {}
+            };
+          </script>
+          <script type="text/javascript" src="https://hecticwelcomingassociation.com/0b2e503c86caa51df286e1aec28ec081/invoke.js"></script>
+        </div>
+      </div>
+    </div>
+
+    <div class="post-view-head">
+      <h1 id="postTitle">Loading…</h1>
+      <div class="date" id="postDate"></div>
+      <div class="price-tag" id="productPrice" style="display:none;margin-top:8px;font-size:1.2rem;font-weight:700"></div>
+    </div>
+
+    <img id="postHeroImg" class="post-hero-img" alt="">
+
+    <div id="loader" class="loader"><div class="spinner"></div></div>
+    <iframe id="postFrame" class="post-frame" style="display:none" frameborder="0"></iframe>
+    <div class="action-wrap"><a id="postActionBtn" class="action-btn" href="#" target="_blank" rel="noopener" style="display:none">Order Now</a></div>
+
+
+    <!-- 🔸 AD: 160x300 Vertical — extra in-content unit -->
+    <div class="ad-slot">
+      <div class="ad-label">Advertisement</div>
+      <div class="ad-glass">
+        <div class="ad-160x300">
+          <script type="text/javascript">
+            atOptions = {
+              'key' : 'e84b9bafa6de1b59679fbbe7227e5399',
+              'format' : 'iframe',
+              'height' : 300,
+              'width' : 160,
+              'params' : {}
+            };
+          </script>
+          <script type="text/javascript" src="https://hecticwelcomingassociation.com/e84b9bafa6de1b59679fbbe7227e5399/invoke.js"></script>
+        </div>
+      </div>
+    </div>
+
+    <!-- 🔸 AD #2: 300x250 Box — below post content (best viewability) -->
+    <div class="ad-slot">
+      <div class="ad-label">Advertisement</div>
+      <div class="ad-glass">
+        <div style="display:flex;justify-content:center">
+          <script type="text/javascript">
+            atOptions = {
+              'key' : 'aaa44a0bb679d29eef80945e6650a585',
+              'format' : 'iframe',
+              'height' : 250,
+              'width' : 300,
+              'params' : {}
+            };
+          </script>
+          <script type="text/javascript" src="https://hecticwelcomingassociation.com/aaa44a0bb679d29eef80945e6650a585/invoke.js"></script>
+        </div>
+      </div>
+    </div>
+
+    <!-- 🔸 AD #3: Native banner — bottom, blends with content -->
+    <div class="ad-slot">
+      <div class="ad-label">Sponsored Content</div>
+      <script async="async" data-cfasync="false" src="https://hecticwelcomingassociation.com/3d746d146b076df722c2f681fdd15e79/invoke.js"></script>
+      <div id="container-3d746d146b076df722c2f681fdd15e79" style="width:100%"></div>
+    </div>
+
+    <div style="text-align:center;margin:10px 0 20px">
+      <a class="btn" href="index.html">← Back to Home</a>
+    </div>
+
+  </div>
+
+  <!-- 🔸 AD #4: 160x600 Skyscraper — sticky sidebar (desktop only, hidden on mobile) -->
+  <aside class="sidebar">
+    <div class="sidebar-sticky">
+      <div class="ad-label" style="text-align:center">Advertisement</div>
+      <div class="ad-glass">
+        <script type="text/javascript">
+          atOptions = {
+            'key' : '37c0de8bcbb0d2352507c8b7938725ff',
+            'format' : 'iframe',
+            'height' : 600,
+            'width' : 160,
+            'params' : {}
+          };
+        </script>
+        <script type="text/javascript" src="https://hecticwelcomingassociation.com/37c0de8bcbb0d2352507c8b7938725ff/invoke.js"></script>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<footer>
+<div class="f-logo">LIGER CO</div>
+  © 2026 Liger Co — All rights reserved.
+</footer>
+
+<!-- 🔸 AD: Direct script #2 (site-wide popunder) -->
+<script src="https://hecticwelcomingassociation.com/14/30/5d/14305d8437d7a192d411b4a39620aacb.js"></script>
+
+<script>
+  (function(){
+    const root = document.documentElement;
+    const btn = document.getElementById('themeToggle');
+    function applyTheme(theme){
+      root.setAttribute('data-theme', theme);
+      localStorage.setItem('theme', theme);
+      if(btn) btn.textContent = theme === 'dark' ? '☀️ Light' : '🌙 Dark';
+    }
+    applyTheme(root.getAttribute('data-theme') || 'light');
+    if(btn){
+      btn.addEventListener('click', function(){
+        applyTheme(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+      });
+    }
+  })();
+</script>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getFirestore, doc, getDoc }
+    from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBRdukrD1dM5AJmbAh7JPT2yWsHdgzbvzw",
+    authDomain: "ssss-19e02.firebaseapp.com",
+    projectId: "ssss-19e02",
+    storageBucket: "ssss-19e02.firebasestorage.app",
+    messagingSenderId: "17505490718",
+    appId: "1:17505490718:web:505a11b64236129907db0f",
+    measurementId: "G-P4EY62HW01"
+  };
+  const db = getFirestore(initializeApp(firebaseConfig));
+const id=new URLSearchParams(location.search).get('id');
+  const titleEl=document.getElementById('postTitle');
+  const dateEl=document.getElementById('postDate');
+  const frame=document.getElementById('postFrame');
+  const loader=document.getElementById('loader');
+  const actionBtn=document.getElementById('postActionBtn');
+  const priceEl=document.getElementById('productPrice');
+  function moneyLkr(v){const n=Number(v); return Number.isFinite(n) && n>0 ? 'LKR '+n.toLocaleString('en-LK') : '';}
+
+  if(!id){
+    titleEl.textContent='Product not found';
+    loader.style.display='none';
+  }else{
+    try{
+      const snap=await getDoc(doc(db,'products',id));
+      loader.style.display='none';
+      if(!snap.exists()){
+        titleEl.textContent='😕 Product not found';
+      }else{
+        const post=snap.data();
+        titleEl.textContent=post.title||'Untitled Product';
+        document.title=(post.title||'Product')+' — Liger Co';
+        if(post.createdAt?.toDate){
+          dateEl.textContent='📅 '+post.createdAt.toDate().toLocaleString('en-GB',
+            {day:'numeric',month:'long',year:'numeric',hour:'2-digit',minute:'2-digit'});
+        }
+        if(post.price){
+          priceEl.textContent='💰 '+moneyLkr(post.price);
+          priceEl.style.display='block';
+        }
+        if(post.image){
+          const heroImg=document.getElementById('postHeroImg');
+          heroImg.src=post.image;
+          heroImg.style.display='block';
+          heroImg.onerror=()=>{heroImg.style.display='none'};
+        }
+        frame.style.display='block';
+        frame.srcdoc=post.html||'<p style="color:#888;font-family:sans-serif;padding:20px">Empty product</p>';
+        if(post.buttonUrl){
+          actionBtn.textContent=post.buttonText || 'Order Now';
+          actionBtn.href=post.buttonUrl;
+          actionBtn.style.display='inline-flex';
+        }
+        frame.onload=()=>{
+          try{
+            const h=frame.contentDocument.documentElement.scrollHeight;
+            if(h>200) frame.style.height=(h+30)+'px';
+          }catch(e){}
+        };
+      }
+    }catch(err){
+      loader.style.display='none';
+      titleEl.textContent='Error loading product';
+      dateEl.textContent=err.message;
+    }
+  }
+</script>
+
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a0961e3b7a19b77e',t:'MTc4MTA3MDgzMQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a0d9672288442842',t:'MTc4MTc3NjM2Mw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
