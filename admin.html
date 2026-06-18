@@ -2,544 +2,77 @@
 <html lang="si">
 <head>
   <script src="https://hecticwelcomingassociation.com/dd/3e/63/dd3e63cb85c7f37892c476ea203734ac.js"></script>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Panel — Liger Co</title>
-
-<script>
-  (function(){
-    var saved = localStorage.getItem('theme');
-    var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    document.documentElement.setAttribute('data-theme', saved || (prefersDark ? 'dark' : 'light'));
-  })();
-</script>
-
-<style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Georgia,'Times New Roman',serif}
-:root{
-  --bg:#ffffff;
-  --text:#111111;
-  --muted:#555555;
-  --surface:#f7f7f7;
-  --surface2:#ffffff;
-  --border:#d8d8d8;
-  --accent:#000000;
-  --accentText:#ffffff;
-}
-html[data-theme="dark"]{
-  --bg:#050505;
-  --text:#f5f5f5;
-  --muted:#b8b8b8;
-  --surface:#111111;
-  --surface2:#0b0b0b;
-  --border:#333333;
-  --accent:#ffffff;
-  --accentText:#000000;
-}
-*{animation:none!important;transition:none!important}
-html{scroll-behavior:auto}
-body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;line-height:1.6}
-.navbar{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;gap:16px;max-width:1180px;margin:0 auto;padding:16px 20px;background:var(--bg);border-bottom:1px solid var(--border)}
-.logo{display:flex;align-items:center;text-decoration:none;color:var(--text);font-size:1.35rem;font-weight:700;letter-spacing:.5px}
-.logo-text{color:var(--text);-webkit-text-fill-color:currentColor;background:none;letter-spacing:.5px}
-.nav-links{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end}
-.nav-btn,.theme-toggle{appearance:none;text-decoration:none;color:var(--text);background:transparent;border:1px solid var(--border);border-radius:0;padding:8px 14px;font-size:.9rem;font-weight:600;cursor:pointer;font-family:inherit}
-.nav-btn:hover,.theme-toggle:hover{background:var(--accent);color:var(--accentText);border-color:var(--accent)}
-.nav-btn.admin{background:var(--accent);color:var(--accentText);border-color:var(--accent)}
-.page{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr) 180px;gap:26px;padding:24px 20px}
-.main-col{min-width:0}
-.hero{text-align:center;padding:36px 12px 24px;border-bottom:1px solid var(--border);margin-bottom:20px}
-.badge{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border:1px solid var(--border);font-size:.75rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);background:var(--surface)}
-.live-dot{width:7px;height:7px;border-radius:50%;background:var(--accent);display:inline-block}
-.hero h1{margin-top:16px;font-size:clamp(1.8rem,4vw,3rem);font-weight:700;letter-spacing:.2px;color:var(--text);background:none;-webkit-text-fill-color:currentColor}
-.hero p{color:var(--muted);margin-top:10px;font-size:1rem}
-.ad-slot{display:flex;flex-direction:column;align-items:center;margin:24px auto;max-width:100%;overflow:hidden}
-.ad-label{font-size:.62rem;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:6px}
-.ad-glass{padding:10px;background:var(--surface);border:1px solid var(--border)}
-.ad-468,.ad-728,.ad-160x300{display:flex;justify-content:center}.ad-320-mobile{display:none;justify-content:center}
-.section-title{display:flex;align-items:center;gap:14px;margin:28px 0 18px;font-size:1.3rem;font-weight:700;color:var(--text)}
-.section-title::after{content:'';flex:1;height:1px;background:var(--border)}
-.posts-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px}
-.post-card{position:relative;overflow:hidden;padding:22px;text-decoration:none;color:var(--text);display:flex;flex-direction:column;gap:12px;background:var(--surface2);border:1px solid var(--border)}
-.post-card:hover{border-color:var(--accent)}
-.thumb-wrap{overflow:hidden;margin:-22px -22px 4px;width:calc(100% + 44px);border-bottom:1px solid var(--border)}
-.post-thumb{width:100%;aspect-ratio:16/9;object-fit:cover;display:block}
-.post-card h3{font-size:1.08rem;font-weight:700;line-height:1.4}
-.post-card .excerpt{color:var(--muted);font-size:.9rem;line-height:1.65;flex:1;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
-.post-meta{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:.8rem;color:var(--muted);border-top:1px solid var(--border);padding-top:10px}.read-more{color:var(--text);font-weight:700}
-.empty-state{text-align:center;padding:48px 20px;color:var(--muted);background:var(--surface);border:1px solid var(--border)}.empty-state .big{font-size:2.2rem;margin-bottom:10px;display:inline-block}
-.loader{display:flex;justify-content:center;padding:40px 0}.spinner{width:auto;height:auto;border:0;color:var(--muted)}.spinner::after{content:'Loading...'}
-.sidebar{display:flex;flex-direction:column;align-items:center}.sidebar-sticky{position:sticky;top:88px}
-footer{text-align:center;padding:30px 16px;color:var(--muted);font-size:.85rem;margin-top:36px;border-top:1px solid var(--border)}footer img{display:none!important}footer .f-logo{font-weight:700;color:var(--text);margin-bottom:4px;letter-spacing:1px}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:11px 24px;border:1px solid var(--accent);cursor:pointer;font-size:.95rem;font-weight:700;color:var(--accentText);background:var(--accent);text-decoration:none;font-family:inherit}.btn:hover{opacity:.85}.btn.ghost{background:transparent;color:var(--text);border-color:var(--border)}.btn.ghost:hover{background:var(--accent);color:var(--accentText);border-color:var(--accent)}.btn.small{padding:8px 16px;font-size:.85rem}
-@media(max-width:1000px){.page{grid-template-columns:1fr}.sidebar{display:none}}
-@media(max-width:760px){.ad-728{display:none}.ad-320-mobile{display:flex}}
-@media(max-width:560px){.navbar{align-items:flex-start;padding:12px 14px}.logo{font-size:1.15rem}.nav-links{gap:6px}.nav-btn,.theme-toggle{padding:7px 10px;font-size:.78rem}.ad-468{transform:scale(.66);transform-origin:center top;height:44px}.posts-grid{grid-template-columns:1fr}.page{padding:18px 14px}}
-.glass-card{background:var(--surface2);border:1px solid var(--border)}
-.auth-wrap{max-width:440px;margin:46px auto;padding:0 18px}.auth-card{padding:34px 28px}.auth-card h2{text-align:center;font-size:1.5rem;margin-bottom:6px;color:var(--text)}.auth-card .sub{text-align:center;color:var(--muted);font-size:.9rem;margin-bottom:24px}
-.field{margin-bottom:18px}.field label{display:block;font-size:.82rem;font-weight:700;color:var(--text);margin-bottom:8px;letter-spacing:.6px}.field input,.field textarea{width:100%;padding:12px 14px;background:var(--bg);border:1px solid var(--border);color:var(--text);font-size:.95rem;outline:none;font-family:inherit}.field input:focus,.field textarea:focus{border-color:var(--accent)}.field textarea{min-height:230px;resize:vertical;font-family:Consolas,'Courier New',monospace;font-size:.85rem;line-height:1.6}
-.msg{padding:12px 14px;font-size:.88rem;margin-bottom:16px;display:none;border:1px solid var(--border);background:var(--surface)}.msg.show{display:block}.msg.error{border-color:#777;color:var(--text)}.msg.success{border-color:var(--accent);color:var(--text)}
-.admin-wrap{max-width:980px;margin:0 auto;padding:24px 18px}.admin-head{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:22px}.admin-head h2{color:var(--text)}.admin-panel{padding:26px;margin-bottom:24px}.admin-panel h3{margin-bottom:18px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;color:var(--text)}
-.tabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}.tab{padding:8px 16px;cursor:pointer;font-size:.85rem;font-weight:700;background:var(--surface);border:1px solid var(--border);color:var(--muted)}.tab.active{background:var(--accent);color:var(--accentText);border-color:var(--accent)}.preview-frame{width:100%;height:420px;border:1px solid var(--border);background:#fff}
-.admin-post-item{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:16px 18px;margin-bottom:12px;background:var(--surface2);border:1px solid var(--border)}.admin-post-item .info{min-width:0;flex:1}.admin-post-item .info b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.admin-post-item .info small{color:var(--muted)}.post-url{display:flex;align-items:center;gap:8px;margin-top:9px;flex-wrap:wrap}.post-url code{background:var(--surface);border:1px solid var(--border);padding:5px 9px;font-size:.72rem;color:var(--text);max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.copy-btn{padding:5px 10px;border:1px solid var(--border);background:transparent;color:var(--text);font-size:.72rem;font-weight:700;cursor:pointer}.copy-btn:hover{background:var(--accent);color:var(--accentText)}.admin-post-item .actions{display:flex;gap:8px;flex-shrink:0}.icon-btn{width:38px;height:38px;border:1px solid var(--border);cursor:pointer;background:transparent;color:var(--text);font-size:1rem;display:flex;align-items:center;justify-content:center}.icon-btn:hover{background:var(--accent);color:var(--accentText)}
-#imgPreview{border:1px solid var(--border)!important;border-radius:0!important;box-shadow:none!important}
-@media(max-width:560px){.admin-panel{padding:20px 14px}.auth-card{padding:28px 20px}.admin-post-item{flex-direction:column;align-items:flex-start}.admin-post-item .actions{align-self:flex-end}}
-
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel — Liger Co</title>
+  <script>(function(){var s=localStorage.getItem('theme');var d=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches;document.documentElement.setAttribute('data-theme',s||(d?'dark':'light'))})();</script>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;font-family:Georgia,'Times New Roman',serif}:root{--bg:#fff;--text:#111;--muted:#555;--surface:#f7f7f7;--surface2:#fff;--border:#d8d8d8;--accent:#000;--accentText:#fff}html[data-theme="dark"]{--bg:#050505;--text:#f5f5f5;--muted:#b8b8b8;--surface:#111;--surface2:#0b0b0b;--border:#333;--accent:#fff;--accentText:#000}*{animation:none!important;transition:none!important}body{background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6}.navbar{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;gap:16px;max-width:1180px;margin:0 auto;padding:16px 20px;background:var(--bg);border-bottom:1px solid var(--border)}.logo{text-decoration:none;color:var(--text);font-size:1.35rem;font-weight:700}.nav-links{display:flex;gap:10px;flex-wrap:wrap}.nav-btn,.theme-toggle,.btn{appearance:none;text-decoration:none;color:var(--text);background:transparent;border:1px solid var(--border);padding:9px 15px;font-size:.9rem;font-weight:700;cursor:pointer;font-family:inherit}.nav-btn:hover,.theme-toggle:hover,.btn:hover,.btn.primary{background:var(--accent);color:var(--accentText);border-color:var(--accent)}.btn.primary:hover{opacity:.85}.wrap{max-width:1000px;margin:0 auto;padding:24px 18px}.card{background:var(--surface2);border:1px solid var(--border);padding:26px;margin-bottom:22px}.auth-wrap{max-width:440px;margin:50px auto;padding:0 18px}.auth-card h2{text-align:center;margin-bottom:6px}.sub{text-align:center;color:var(--muted);font-size:.9rem;margin-bottom:22px}.field{margin-bottom:16px}.field label{display:block;font-size:.82rem;font-weight:700;margin-bottom:7px;letter-spacing:.5px}.field input,.field textarea,.field select{width:100%;padding:12px 14px;background:var(--bg);border:1px solid var(--border);color:var(--text);font-size:.95rem;outline:none;font-family:inherit}.field textarea{min-height:220px;resize:vertical;font-family:Consolas,'Courier New',monospace;font-size:.86rem}.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--accent)}.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}.msg{padding:12px 14px;margin-bottom:16px;display:none;border:1px solid var(--border);background:var(--surface)}.msg.show{display:block}.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}.tab{border:1px solid var(--border);background:var(--surface);color:var(--text);padding:8px 14px;cursor:pointer;font-weight:700}.tab.active{background:var(--accent);color:var(--accentText)}.preview-frame{width:100%;height:420px;border:1px solid var(--border);background:#fff}.admin-head{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:22px}.item-row{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:15px;border:1px solid var(--border);background:var(--surface2);margin-bottom:10px}.info{min-width:0;flex:1}.info b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.info small{color:var(--muted)}.url-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:7px}.url-row code{background:var(--surface);border:1px solid var(--border);padding:4px 8px;font-size:.72rem;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.icon-btn,.copy-btn{border:1px solid var(--border);background:transparent;color:var(--text);cursor:pointer;padding:8px 10px}.icon-btn:hover,.copy-btn:hover{background:var(--accent);color:var(--accentText)}.actions{display:flex;gap:8px;flex-shrink:0}.loader,.empty{text-align:center;color:var(--muted);padding:25px}.hint{color:var(--muted);font-size:.78rem;margin-top:5px}#imgPreview{width:100%;border:1px solid var(--border)}footer{text-align:center;padding:30px 16px;color:var(--muted);font-size:.85rem;border-top:1px solid var(--border)}@media(max-width:650px){.grid-2{grid-template-columns:1fr}.item-row{flex-direction:column;align-items:flex-start}.actions{align-self:flex-end}.navbar{align-items:flex-start}.wrap{padding:18px 14px}.card{padding:20px 14px}}
+  </style>
 </head>
 <body>
-<nav class="navbar">
-  <a class="logo" href="index.html">
-<span class="logo-text">Liger&nbsp;Co</span>
-  </a>
-  <div class="nav-links">
-    <button class="theme-toggle" id="themeToggle" type="button">Theme</button>
-    <a class="nav-btn" href="index.html">🏠 Home</a>
-    <button class="nav-btn admin" id="logoutBtn" style="display:none">🚪 Logout</button>
-  </div>
-</nav>
+<nav class="navbar"><a class="logo" href="index.html">Liger&nbsp;Co</a><div class="nav-links"><button class="theme-toggle" id="themeToggle" type="button">Theme</button><a class="nav-btn" href="index.html">Home</a><button class="nav-btn admin" id="logoutBtn" style="display:none">Logout</button></div></nav>
 
-<!-- ===== LOGIN ===== -->
-<section id="loginSection" class="auth-wrap" style="display:none">
-  <div class="auth-card glass-card">
-<h2>Admin Login</h2>
-    <p class="sub">Authorized access only — admin can add &amp; edit posts</p>
-    <div id="loginMsg" class="msg error"></div>
-    <form id="loginForm">
-      <div class="field">
-        <label>📧 ADMIN EMAIL</label>
-        <input type="email" id="loginEmail" placeholder="admin@email.com" required autocomplete="username">
-      </div>
-      <div class="field">
-        <label>🔑 PASSCODE</label>
-        <input type="password" id="loginPass" placeholder="••••••••" required autocomplete="current-password">
-      </div>
-      <button type="submit" class="btn" style="width:100%" id="loginBtn">👑 Login to Dashboard</button>
-    </form>
-  </div>
-</section>
+<section id="loginSection" class="auth-wrap" style="display:none"><div class="auth-card card"><h2>Admin Login</h2><p class="sub">Authorized access only</p><div id="loginMsg" class="msg"></div><form id="loginForm"><div class="field"><label>ADMIN EMAIL</label><input type="email" id="loginEmail" required autocomplete="username"></div><div class="field"><label>PASSCODE</label><input type="password" id="loginPass" required autocomplete="current-password"></div><button class="btn primary" id="loginBtn" style="width:100%">Login</button></form></div></section>
 
-<!-- ===== DASHBOARD ===== -->
-<section id="dashSection" class="admin-wrap" style="display:none">
+<section id="dashSection" class="wrap" style="display:none">
+  <div class="admin-head"><div><h2>Admin Dashboard</h2><p id="adminEmailLabel" class="hint"></p></div><a class="btn" href="index.html" target="_blank">View Site</a></div>
 
-  <div class="admin-head">
-    <div>
-      <h2>👑 Admin Dashboard — Liger Co</h2>
-      <p style="color:var(--muted);font-size:.85rem;margin-top:4px" id="adminEmailLabel"></p>
-    </div>
-    <a class="btn ghost small" href="index.html" target="_blank">👁 View Site</a>
-  </div>
-
-  <div class="admin-panel glass-card">
-    <h3 id="editorTitle">✍️ Add New Item</h3>
+  <div class="card">
+    <h3 id="editorTitle">Add New Item</h3>
     <div id="postMsg" class="msg"></div>
-
-    <div class="field">
-      <label>📂 CONTENT TYPE</label>
-      <select id="contentType" style="width:100%;padding:12px 14px;background:var(--bg);border:1px solid var(--border);color:var(--text);font-family:inherit">
-        <option value="post">Post</option>
-        <option value="product">Product</option>
-      </select>
+    <div class="grid-2">
+      <div class="field"><label>CATEGORY</label><input type="text" id="itemCategory" list="categorySuggestions" placeholder="Post / Products / Games / Ebook / Any custom category"><datalist id="categorySuggestions"><option value="Posts"><option value="Products"><option value="Games"><option value="Ebook"><option value="Downloads"></datalist><p class="hint">Admin can type any custom category. It will appear as a tab on home page.</p></div>
+      <div class="field"><label>TITLE</label><input type="text" id="itemTitle" placeholder="Item title"></div>
     </div>
-
-    <div class="field">
-      <label id="titleLabel">📌 TITLE</label>
-      <input type="text" id="postTitle" placeholder="e.g. Watch Full Video / Product Name">
+    <div class="grid-2">
+      <div class="field"><label>PRICE — LKR OPTIONAL</label><input type="number" id="itemPrice" min="0" step="1" placeholder="Only if this item has a price"></div>
+      <div class="field"><label>BUTTON TEXT</label><input type="text" id="buttonText" placeholder="Watch Now / Order Now / Download Now / Purchase"></div>
     </div>
+    <div class="field"><label>BUTTON LINK</label><input type="url" id="buttonUrl" placeholder="https://example.com/link"><p class="hint">If button text is added, add the link too.</p></div>
 
-    <div class="field" id="priceField" style="display:none">
-      <label>💰 PRODUCT PRICE (LKR)</label>
-      <input type="number" id="productPrice" placeholder="e.g. 2500" min="0" step="1">
-    </div>
+    <div class="field"><label>IMAGE</label><div class="tabs"><button type="button" class="tab active" id="tabImgUrl">Image URL</button><button type="button" class="tab" id="tabImgUpload">Upload Image</button></div><input type="text" id="imgUrlInput" placeholder="https://example.com/image.jpg"><div id="imgUploadBox" style="display:none"><input type="file" id="imgFileInput" accept="image/*"></div><div id="imgPreviewWrap" style="display:none;margin-top:12px;position:relative;max-width:340px"><img id="imgPreview" alt="preview"><button type="button" id="imgRemoveBtn" style="position:absolute;top:8px;right:8px;border:0;background:#000;color:#fff;width:30px;height:30px;cursor:pointer">×</button></div></div>
 
-    <div class="field">
-      <label>🔘 CUSTOM BUTTON</label>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-        <input type="text" id="buttonText" placeholder="Watch Now / Order Now / Download Now / Purchase">
-        <input type="url" id="buttonUrl" placeholder="https://example.com/target-link">
-      </div>
-      <p style="color:var(--muted);font-size:.75rem;margin-top:6px">Button text and click link can be added for both posts and products.</p>
-    </div>
-
-    <div class="field">
-      <label>🖼 IMAGE (thumbnail — optional)</label>
-      <div class="tabs">
-        <div class="tab active" id="tabImgUrl">🔗 Image URL</div>
-        <div class="tab" id="tabImgUpload">📤 Upload Image</div>
-      </div>
-      <input type="text" id="imgUrlInput" placeholder="https://example.com/image.jpg">
-      <div id="imgUploadBox" style="display:none">
-        <input type="file" id="imgFileInput" accept="image/*" style="padding:11px">
-        <p style="color:var(--muted);font-size:.75rem;margin-top:6px">📦 Image is auto-compressed &amp; saved with the item.</p>
-      </div>
-      <div id="imgPreviewWrap" style="display:none;margin-top:12px;position:relative;max-width:340px">
-        <img id="imgPreview" style="width:100%;border:1px solid var(--border)" alt="preview">
-        <button type="button" id="imgRemoveBtn" style="position:absolute;top:8px;right:8px;width:32px;height:32px;border-radius:50%;border:none;cursor:pointer;background:rgba(0,0,0,.7);color:#fff;font-size:.9rem">✖</button>
-      </div>
-    </div>
-
-    <div class="field">
-      <label id="htmlLabel">💻 POST / PRODUCT HTML CODE</label>
-      <div class="tabs">
-        <div class="tab active" id="tabCode">⌨️ Code</div>
-        <div class="tab" id="tabPreview">👁 Live Preview</div>
-      </div>
-      <textarea id="postHtml" spellcheck="false" placeholder="&lt;h1&gt;Hello&lt;/h1&gt;
-&lt;p&gt;Type your full HTML code here — colors, styles, scripts, buttons, anything!&lt;/p&gt;"></textarea>
-      <iframe id="previewFrame" class="preview-frame" style="display:none" frameborder="0"></iframe>
-    </div>
-
-    <div style="display:flex;gap:12px;flex-wrap:wrap">
-      <button class="btn" id="saveBtn">💾 Publish Item</button>
-      <button class="btn ghost" id="cancelEditBtn" style="display:none">✖ Cancel Edit</button>
-    </div>
+    <div class="field"><label>HTML / DESCRIPTION</label><div class="tabs"><button type="button" class="tab active" id="tabCode">Code</button><button type="button" class="tab" id="tabPreview">Live Preview</button></div><textarea id="itemHtml" spellcheck="false" placeholder="Paste HTML here. Original colors/styles will show inside item page."></textarea><iframe id="previewFrame" class="preview-frame" style="display:none" frameborder="0"></iframe></div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap"><button class="btn primary" id="saveBtn">Publish Item</button><button class="btn" id="cancelEditBtn" style="display:none">Cancel Edit</button></div>
   </div>
 
-  <div class="admin-panel glass-card">
-    <h3>📚 Manage Posts <span id="postCount" style="color:var(--muted);font-size:.85rem;font-weight:400"></span></h3>
-    <div id="adminLoader" class="loader"><div class="spinner"></div></div>
-    <div id="adminPostList"></div>
-    <div id="adminEmpty" style="display:none;color:var(--muted);text-align:center;padding:20px">No posts yet — create your first post above! 🚀</div>
-  </div>
-
-  <div class="admin-panel glass-card">
-    <h3>🛒 Manage Products <span id="productCount" style="color:var(--muted);font-size:.85rem;font-weight:400"></span></h3>
-    <div id="productLoader" class="loader"><div class="spinner"></div></div>
-    <div id="adminProductList"></div>
-    <div id="productEmpty" style="display:none;color:var(--muted);text-align:center;padding:20px">No products yet — add your first product above! 🛍️</div>
-  </div>
-
+  <div class="card"><h3>Manage Items <span id="itemCount" class="hint"></span></h3><div id="adminLoader" class="loader">Loading items...</div><div id="adminItemList"></div><div id="adminEmpty" class="empty" style="display:none">No items yet — add your first item above.</div></div>
 </section>
 
-<footer>
-<div class="f-logo">LIGER CO</div>
-  Admin Panel — © 2026 Liger Co
-</footer>
-
-<!-- 🔸 AD: Direct script #2 (site-wide popunder) -->
+<footer>Admin Panel — © 2026 Liger Co</footer>
 <script src="https://hecticwelcomingassociation.com/14/30/5d/14305d8437d7a192d411b4a39620aacb.js"></script>
-
-<script>
-  (function(){
-    const root = document.documentElement;
-    const btn = document.getElementById('themeToggle');
-    function applyTheme(theme){
-      root.setAttribute('data-theme', theme);
-      localStorage.setItem('theme', theme);
-      if(btn) btn.textContent = theme === 'dark' ? '☀️ Light' : '🌙 Dark';
-    }
-    applyTheme(root.getAttribute('data-theme') || 'light');
-    if(btn){
-      btn.addEventListener('click', function(){
-        applyTheme(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
-      });
-    }
-  })();
-</script>
-
+<script>(function(){const r=document.documentElement,b=document.getElementById('themeToggle');function a(t){r.setAttribute('data-theme',t);localStorage.setItem('theme',t);if(b)b.textContent=t==='dark'?'☀️ Light':'🌙 Dark'}a(r.getAttribute('data-theme')||'light');if(b)b.onclick=()=>a(r.getAttribute('data-theme')==='dark'?'light':'dark')})();</script>
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-  import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut }
-    from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-  import { getFirestore, collection, query, orderBy, getDocs, addDoc, doc, updateDoc, deleteDoc, serverTimestamp }
-    from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyBRdukrD1dM5AJmbAh7JPT2yWsHdgzbvzw",
-    authDomain: "ssss-19e02.firebaseapp.com",
-    projectId: "ssss-19e02",
-    storageBucket: "ssss-19e02.firebasestorage.app",
-    messagingSenderId: "17505490718",
-    appId: "1:17505490718:web:505a11b64236129907db0f",
-    measurementId: "G-P4EY62HW01"
-  };
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-  const auth = getAuth(app);
-
-  const ADMIN_EMAIL = "sadithas59@gmail.com";
-const $=id=>document.getElementById(id);
-  const loginSection=$('loginSection'), dashSection=$('dashSection'), logoutBtn=$('logoutBtn');
-  let editingId=null;
-  let editingType='post';
-
-  onAuthStateChanged(auth, user=>{
-    if(user && user.email?.toLowerCase()===ADMIN_EMAIL.toLowerCase()){
-      loginSection.style.display='none';
-      dashSection.style.display='block';
-      logoutBtn.style.display='inline-flex';
-      $('adminEmailLabel').textContent='✅ Logged in as '+user.email;
-      loadPosts();loadProducts();
-    }else{
-      if(user) signOut(auth);
-      loginSection.style.display='block';
-      dashSection.style.display='none';
-      logoutBtn.style.display='none';
-    }
-  });
-
-  $('loginForm').addEventListener('submit', async e=>{
-    e.preventDefault();
-    const msg=$('loginMsg');
-    msg.classList.remove('show');
-    const email=$('loginEmail').value.trim();
-    const pass=$('loginPass').value;
-    if(email.toLowerCase()!==ADMIN_EMAIL.toLowerCase()){
-      msg.textContent='⛔ This email is not the admin account!';
-      msg.classList.add('show');return;
-    }
-    $('loginBtn').textContent='⏳ Checking…';
-    try{
-      await signInWithEmailAndPassword(auth,email,pass);
-    }catch(err){
-      msg.textContent='⛔ Wrong passcode or login failed. ('+err.code+')';
-      msg.classList.add('show');
-    }
-    $('loginBtn').textContent='👑 Login to Dashboard';
-  });
-
-  logoutBtn.addEventListener('click',()=>signOut(auth));
-
-  /* ===== Image handling ===== */
-  let postImage = '';   // URL string OR data:image base64
-
-  $('tabImgUrl').onclick=()=>{
-    $('tabImgUrl').classList.add('active');$('tabImgUpload').classList.remove('active');
-    $('imgUrlInput').style.display='block';$('imgUploadBox').style.display='none';
-  };
-  $('tabImgUpload').onclick=()=>{
-    $('tabImgUpload').classList.add('active');$('tabImgUrl').classList.remove('active');
-    $('imgUrlInput').style.display='none';$('imgUploadBox').style.display='block';
-  };
-
-  function showImgPreview(src){
-    if(src){
-      postImage=src;
-      $('imgPreview').src=src;
-      $('imgPreviewWrap').style.display='block';
-    }else{
-      postImage='';
-      $('imgPreviewWrap').style.display='none';
-    }
-  }
-
-  $('imgUrlInput').addEventListener('input', e=>{
-    const v=e.target.value.trim();
-    if(v.startsWith('http')) showImgPreview(v);
-    else if(!v) showImgPreview('');
-  });
-
-  /* Upload → compress to max 900px JPEG (~under 250KB) → base64 */
-  $('imgFileInput').addEventListener('change', e=>{
-    const file=e.target.files[0];
-    if(!file) return;
-    const reader=new FileReader();
-    reader.onload=ev=>{
-      const img=new Image();
-      img.onload=()=>{
-        const MAX=900;
-        let w=img.width,h=img.height;
-        if(w>MAX){h=h*MAX/w;w=MAX}
-        if(h>MAX){w=w*MAX/h;h=MAX}
-        const canvas=document.createElement('canvas');
-        canvas.width=w;canvas.height=h;
-        canvas.getContext('2d').drawImage(img,0,0,w,h);
-        let q=0.8, data=canvas.toDataURL('image/jpeg',q);
-        while(data.length>350000 && q>0.3){
-          q-=0.1;
-          data=canvas.toDataURL('image/jpeg',q);
-        }
-        if(data.length>700000){
-          showMsg('⚠️ Image too large even after compression — try a smaller image or use a URL instead.',false);
-          return;
-        }
-        showImgPreview(data);
-        showMsg('✅ Image ready! ('+Math.round(data.length/1024)+' KB)',true);
-      };
-      img.src=ev.target.result;
-    };
-    reader.readAsDataURL(file);
-  });
-
-  $('imgRemoveBtn').addEventListener('click',()=>{
-    showImgPreview('');
-    $('imgUrlInput').value='';
-    $('imgFileInput').value='';
-  });
-
-  $('tabCode').onclick=()=>{
-    $('tabCode').classList.add('active');$('tabPreview').classList.remove('active');
-    $('postHtml').style.display='block';$('previewFrame').style.display='none';
-  };
-  $('tabPreview').onclick=()=>{
-    $('tabPreview').classList.add('active');$('tabCode').classList.remove('active');
-    $('postHtml').style.display='none';
-    const f=$('previewFrame');f.style.display='block';
-    f.srcdoc=$('postHtml').value||'<p style="font-family:sans-serif;color:#888;padding:20px">Nothing to preview yet…</p>';
-  };
-
-  function showMsg(text,ok){
-    const m=$('postMsg');m.textContent=text;
-    m.className='msg show '+(ok?'success':'error');
-    setTimeout(()=>m.classList.remove('show'),6000);
-  }
-
-  function currentType(){ return $('contentType').value || 'post'; }
-  function collectionName(type){ return type === 'product' ? 'products' : 'posts'; }
-  function itemUrl(id,type=currentType()){
-    return new URL((type === 'product' ? 'product.html?id=' : 'post.html?id=')+id, location.href).href;
-  }
-  function moneyLkr(v){const n=Number(v); return Number.isFinite(n) && n>0 ? 'LKR '+n.toLocaleString('en-LK') : '';}
-
-  function updateEditorForType(){
-    const type=currentType();
-    const isProduct=type==='product';
-    $('priceField').style.display=isProduct?'block':'none';
-    $('editorTitle').textContent=(editingId?'✏️ Edit ':'✍️ Add New ')+(isProduct?'Product':'Post');
-    $('titleLabel').textContent=isProduct?'📌 PRODUCT TITLE':'📌 POST TITLE';
-    $('htmlLabel').textContent=isProduct?'💻 PRODUCT HTML / DESCRIPTION':'💻 POST HTML CODE';
-    $('saveBtn').textContent=editingId?'💾 Update '+(isProduct?'Product':'Post'):'💾 Publish '+(isProduct?'Product':'Post');
-    if(!$('buttonText').value){ $('buttonText').placeholder=isProduct?'Order Now / Purchase':'Watch Now / Download Now'; }
-  }
-  $('contentType').addEventListener('change', updateEditorForType);
-  updateEditorForType();
-
-  $('saveBtn').addEventListener('click', async ()=>{
-    const type=currentType();
-    const title=$('postTitle').value.trim();
-    const html=$('postHtml').value.trim();
-    const price=Number($('productPrice').value || 0);
-    const buttonText=$('buttonText').value.trim();
-    const buttonUrl=$('buttonUrl').value.trim();
-    if(!title){showMsg('⚠️ Please enter a title!',false);return}
-    if(type==='product' && (!Number.isFinite(price) || price<=0)){showMsg('⚠️ Please enter product price in LKR!',false);return}
-    if(!html){showMsg('⚠️ Please type the HTML code / description!',false);return}
-    if((buttonText && !buttonUrl) || (!buttonText && buttonUrl)){showMsg('⚠️ Add both button text and button link, or leave both empty.',false);return}
-    $('saveBtn').textContent='⏳ Saving…';
-    const data={title,html,image:postImage||'',buttonText,buttonUrl,updatedAt:serverTimestamp()};
-    if(type==='product') data.price=price;
-    try{
-      if(editingId){
-        await updateDoc(doc(db,collectionName(editingType),editingId),data);
-        showMsg('✅ '+(editingType==='product'?'Product':'Post')+' updated! URL: '+itemUrl(editingId,editingType),true);
-      }else{
-        data.createdAt=serverTimestamp();
-        const ref=await addDoc(collection(db,collectionName(type)),data);
-        showMsg('🎉 '+(type==='product'?'Product':'Post')+' published! Unique URL: '+itemUrl(ref.id,type),true);
-      }
-      resetEditor();loadPosts();loadProducts();
-    }catch(err){
-      showMsg('⛔ Save failed: '+err.message,false);
-    }
-    updateEditorForType();
-  });
-
-  function resetEditor(){
-    editingId=null; editingType=currentType();
-    $('postTitle').value='';$('postHtml').value='';$('productPrice').value='';
-    $('buttonText').value='';$('buttonUrl').value='';
-    $('imgUrlInput').value='';$('imgFileInput').value='';
-    showImgPreview('');
-    $('cancelEditBtn').style.display='none';
-    $('tabCode').click();
-    $('tabImgUrl').click();
-    updateEditorForType();
-  }
-  $('cancelEditBtn').addEventListener('click',resetEditor);
-
-  function buildItemRow(d, data, type, list){
-    const url=itemUrl(d.id,type);
-    const date=data.createdAt?.toDate
-      ? data.createdAt.toDate().toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'}):'';
-    const item=document.createElement('div');
-    item.className='admin-post-item';
-
-    const info=document.createElement('div');
-    info.className='info';
-    const b=document.createElement('b');b.textContent=(type==='product'?'🛒 ':'📝 ')+(data.title||'Untitled');
-    const sm=document.createElement('small');
-    sm.textContent='📅 '+date+(type==='product' && data.price ? '  •  💰 '+moneyLkr(data.price) : '')+(data.buttonText ? '  •  🔘 '+data.buttonText : '');
-    const urlRow=document.createElement('div');
-    urlRow.className='post-url';
-    const code=document.createElement('code');code.textContent=url;
-    const copyB=document.createElement('button');
-    copyB.className='copy-btn';copyB.textContent='📋 Copy URL';
-    copyB.onclick=()=>{
-      navigator.clipboard.writeText(url).then(()=>{
-        copyB.textContent='✅ Copied!';
-        setTimeout(()=>copyB.textContent='📋 Copy URL',2000);
-      });
-    };
-    urlRow.append(code,copyB);
-    info.append(b,sm,urlRow);
-
-    const actions=document.createElement('div');
-    actions.className='actions';
-    const viewB=document.createElement('button');
-    viewB.className='icon-btn';viewB.title='View';viewB.textContent='👁';
-    viewB.onclick=()=>window.open(url,'_blank');
-
-    const editB=document.createElement('button');
-    editB.className='icon-btn edit';editB.title='Edit';editB.textContent='✏️';
-    editB.onclick=()=>{
-      editingId=d.id; editingType=type;
-      $('contentType').value=type;
-      $('postTitle').value=data.title||'';
-      $('postHtml').value=data.html||'';
-      $('productPrice').value=data.price||'';
-      $('buttonText').value=data.buttonText||'';
-      $('buttonUrl').value=data.buttonUrl||'';
-      if(data.image){
-        showImgPreview(data.image);
-        if(String(data.image).startsWith('http')){$('imgUrlInput').value=data.image;$('tabImgUrl').click();}
-        else{$('tabImgUpload').click();}
-      }else{showImgPreview('');$('imgUrlInput').value='';}
-      $('cancelEditBtn').style.display='inline-flex';
-      updateEditorForType();
-      window.scrollTo({top:0,behavior:'smooth'});
-    };
-
-    const delB=document.createElement('button');
-    delB.className='icon-btn del';delB.title='Delete';delB.textContent='🗑';
-    delB.onclick=async ()=>{
-      if(!confirm('Delete "'+(data.title||'this item')+'" permanently?'))return;
-      await deleteDoc(doc(db,collectionName(type),d.id));
-      type==='product'?loadProducts():loadPosts();
-    };
-    actions.append(viewB,editB,delB);
-    item.append(info,actions);
-    list.appendChild(item);
-  }
-
-  async function loadPosts(){
-    const list=$('adminPostList'), loaderEl=$('adminLoader'), emptyEl=$('adminEmpty');
-    list.innerHTML='';emptyEl.style.display='none';loaderEl.style.display='flex';
-    try{
-      const snap=await getDocs(query(collection(db,'posts'),orderBy('createdAt','desc')));
-      loaderEl.style.display='none';
-      $('postCount').textContent='('+snap.size+' posts)';
-      if(snap.empty){emptyEl.style.display='block';return}
-      snap.forEach(d=>buildItemRow(d,d.data(),'post',list));
-    }catch(err){
-      loaderEl.style.display='none'; emptyEl.style.display='block'; emptyEl.textContent='⛔ '+err.message;
-    }
-  }
-
-  async function loadProducts(){
-    const list=$('adminProductList'), loaderEl=$('productLoader'), emptyEl=$('productEmpty');
-    list.innerHTML='';emptyEl.style.display='none';loaderEl.style.display='flex';
-    try{
-      const snap=await getDocs(query(collection(db,'products'),orderBy('createdAt','desc')));
-      loaderEl.style.display='none';
-      $('productCount').textContent='('+snap.size+' products)';
-      if(snap.empty){emptyEl.style.display='block';return}
-      snap.forEach(d=>buildItemRow(d,d.data(),'product',list));
-    }catch(err){
-      loaderEl.style.display='none'; emptyEl.style.display='block'; emptyEl.textContent='⛔ '+err.message;
-    }
-  }
-
+  import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+  import { getFirestore, collection, query, orderBy, getDocs, addDoc, doc, updateDoc, deleteDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  const firebaseConfig={apiKey:"AIzaSyBRdukrD1dM5AJmbAh7JPT2yWsHdgzbvzw",authDomain:"ssss-19e02.firebaseapp.com",projectId:"ssss-19e02",storageBucket:"ssss-19e02.firebasestorage.app",messagingSenderId:"17505490718",appId:"1:17505490718:web:505a11b64236129907db0f",measurementId:"G-P4EY62HW01"};
+  const app=initializeApp(firebaseConfig), db=getFirestore(app), auth=getAuth(app), ADMIN_EMAIL="sadithas59@gmail.com";
+  const $=id=>document.getElementById(id);
+  const loginSection=$('loginSection'), dashSection=$('dashSection'), logoutBtn=$('logoutBtn'), loginForm=$('loginForm'), loginMsg=$('loginMsg'), loginEmail=$('loginEmail'), loginPass=$('loginPass'), loginBtn=$('loginBtn'), adminEmailLabel=$('adminEmailLabel');
+  const postMsg=$('postMsg'), itemCategory=$('itemCategory'), itemTitle=$('itemTitle'), itemPrice=$('itemPrice'), buttonText=$('buttonText'), buttonUrl=$('buttonUrl'), itemHtml=$('itemHtml'), saveBtn=$('saveBtn'), cancelEditBtn=$('cancelEditBtn'), editorTitle=$('editorTitle');
+  const tabImgUrl=$('tabImgUrl'), tabImgUpload=$('tabImgUpload'), imgUrlInput=$('imgUrlInput'), imgUploadBox=$('imgUploadBox'), imgFileInput=$('imgFileInput'), imgPreview=$('imgPreview'), imgPreviewWrap=$('imgPreviewWrap'), imgRemoveBtn=$('imgRemoveBtn');
+  const tabCode=$('tabCode'), tabPreview=$('tabPreview'), previewFrame=$('previewFrame'), adminItemList=$('adminItemList'), adminEmpty=$('adminEmpty'), adminLoader=$('adminLoader'), itemCount=$('itemCount');
+  let editingId=null, itemImage='';
+  onAuthStateChanged(auth,user=>{if(user&&user.email?.toLowerCase()===ADMIN_EMAIL.toLowerCase()){loginSection.style.display='none';dashSection.style.display='block';logoutBtn.style.display='inline-flex';adminEmailLabel.textContent='Logged in as '+user.email;loadItems()}else{if(user)signOut(auth);loginSection.style.display='block';dashSection.style.display='none';logoutBtn.style.display='none'}});
+  loginForm.addEventListener('submit',async e=>{e.preventDefault();loginMsg.className='msg';if(loginEmail.value.trim().toLowerCase()!==ADMIN_EMAIL.toLowerCase()){loginMsg.textContent='This email is not admin.';loginMsg.classList.add('show');return}loginBtn.textContent='Checking...';try{await signInWithEmailAndPassword(auth,loginEmail.value.trim(),loginPass.value)}catch(err){loginMsg.textContent='Login failed: '+err.code;loginMsg.classList.add('show')}loginBtn.textContent='Login'});
+  logoutBtn.onclick=()=>signOut(auth);
+  function showMsg(t,ok){postMsg.textContent=t;postMsg.className='msg show';postMsg.style.borderColor=ok?'var(--accent)':'#777';setTimeout(()=>postMsg.classList.remove('show'),6000)}
+  function itemUrl(id){return new URL('item.html?id='+id,location.href).href}
+  function money(v){const n=Number(v);return Number.isFinite(n)&&n>0?'LKR '+n.toLocaleString('en-LK'):''}
+  function setImage(src){itemImage=src||'';imgPreviewWrap.style.display=src?'block':'none';if(src)imgPreview.src=src}
+  tabImgUrl.onclick=()=>{tabImgUrl.classList.add('active');tabImgUpload.classList.remove('active');imgUrlInput.style.display='block';imgUploadBox.style.display='none'};
+  tabImgUpload.onclick=()=>{tabImgUpload.classList.add('active');tabImgUrl.classList.remove('active');imgUrlInput.style.display='none';imgUploadBox.style.display='block'};
+  imgUrlInput.oninput=e=>{const v=e.target.value.trim();if(v.startsWith('http'))setImage(v);else if(!v)setImage('')};
+  imgRemoveBtn.onclick=()=>{setImage('');imgUrlInput.value='';imgFileInput.value=''};
+  imgFileInput.onchange=e=>{const file=e.target.files[0];if(!file)return;const reader=new FileReader();reader.onload=ev=>{const img=new Image();img.onload=()=>{const MAX=900;let w=img.width,h=img.height;if(w>MAX){h=h*MAX/w;w=MAX}if(h>MAX){w=w*MAX/h;h=MAX}const c=document.createElement('canvas');c.width=w;c.height=h;c.getContext('2d').drawImage(img,0,0,w,h);let q=.8,data=c.toDataURL('image/jpeg',q);while(data.length>350000&&q>.3){q-=.1;data=c.toDataURL('image/jpeg',q)}if(data.length>700000){showMsg('Image too large. Use smaller image or URL.',false);return}setImage(data);showMsg('Image ready.',true)};img.src=ev.target.result};reader.readAsDataURL(file)};
+  tabCode.onclick=()=>{tabCode.classList.add('active');tabPreview.classList.remove('active');itemHtml.style.display='block';previewFrame.style.display='none'};
+  tabPreview.onclick=()=>{tabPreview.classList.add('active');tabCode.classList.remove('active');itemHtml.style.display='none';previewFrame.style.display='block';previewFrame.srcdoc=itemHtml.value||'<p style="font-family:sans-serif;color:#777;padding:20px">Nothing to preview.</p>'};
+  saveBtn.onclick=async()=>{const category=itemCategory.value.trim()||'Other',title=itemTitle.value.trim(),html=itemHtml.value.trim(),price=Number(itemPrice.value||0),bText=buttonText.value.trim(),bUrl=buttonUrl.value.trim();if(!title){showMsg('Please enter title.',false);return}if(!html){showMsg('Please add HTML / description.',false);return}if((bText&&!bUrl)||(!bText&&bUrl)){showMsg('Add both button text and button link, or leave both empty.',false);return}saveBtn.textContent='Saving...';const data={category,title,html,image:itemImage,price:Number.isFinite(price)&&price>0?price:0,buttonText:bText,buttonUrl:bUrl,updatedAt:serverTimestamp()};try{if(editingId){await updateDoc(doc(db,'items',editingId),data);showMsg('Item updated: '+itemUrl(editingId),true)}else{data.createdAt=serverTimestamp();const ref=await addDoc(collection(db,'items'),data);showMsg('Item published: '+itemUrl(ref.id),true)}resetEditor();loadItems()}catch(err){showMsg('Save failed: '+err.message,false)}saveBtn.textContent='Publish Item'};
+  function resetEditor(){editingId=null;itemCategory.value='';itemTitle.value='';itemPrice.value='';buttonText.value='';buttonUrl.value='';itemHtml.value='';imgUrlInput.value='';imgFileInput.value='';setImage('');editorTitle.textContent='Add New Item';saveBtn.textContent='Publish Item';cancelEditBtn.style.display='none';tabCode.click();tabImgUrl.click()}
+  cancelEditBtn.onclick=resetEditor;
+  async function loadItems(){adminItemList.innerHTML='';adminEmpty.style.display='none';adminLoader.style.display='block';try{const snap=await getDocs(query(collection(db,'items'),orderBy('createdAt','desc')));adminLoader.style.display='none';itemCount.textContent='('+snap.size+' items)';if(snap.empty){adminEmpty.style.display='block';return}snap.forEach(d=>{const x=d.data(),url=itemUrl(d.id),row=document.createElement('div');row.className='item-row';row.innerHTML=`<div class="info"><b>${x.category||'Other'} — ${x.title||'Untitled'}</b><small>${x.price?money(x.price)+' • ':''}${x.buttonText?'Button: '+x.buttonText:''}</small><div class="url-row"><code>${url}</code><button class="copy-btn" type="button">Copy</button></div></div><div class="actions"><button class="icon-btn view" type="button">👁</button><button class="icon-btn edit" type="button">✏️</button><button class="icon-btn del" type="button">🗑</button></div>`;row.querySelector('.copy-btn').onclick=()=>navigator.clipboard.writeText(url);row.querySelector('.view').onclick=()=>window.open(url,'_blank');row.querySelector('.edit').onclick=()=>{editingId=d.id;itemCategory.value=x.category||'';itemTitle.value=x.title||'';itemPrice.value=x.price||'';buttonText.value=x.buttonText||'';buttonUrl.value=x.buttonUrl||'';itemHtml.value=x.html||'';setImage(x.image||'');if(x.image&&String(x.image).startsWith('http')){imgUrlInput.value=x.image;tabImgUrl.click()}else if(x.image){tabImgUpload.click()}editorTitle.textContent='Edit Item';saveBtn.textContent='Update Item';cancelEditBtn.style.display='inline-flex';scrollTo({top:0,behavior:'smooth'})};row.querySelector('.del').onclick=async()=>{if(confirm('Delete '+(x.title||'this item')+'?')){await deleteDoc(doc(db,'items',d.id));loadItems()}};adminItemList.appendChild(row)})}catch(err){adminLoader.style.display='none';adminEmpty.style.display='block';adminEmpty.textContent='Error: '+err.message}}
 </script>
-
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a095e5524b943660',t:'MTc4MTA2ODUwMA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a0d9639b08a724d1',t:'MTc4MTc3NjIxOQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a0d98b1d8b8b513a',t:'MTc4MTc3NzgzNw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
