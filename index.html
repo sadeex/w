@@ -64,10 +64,12 @@ body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;l
 .post-card{position:relative;overflow:hidden;padding:22px;text-decoration:none;color:var(--text);display:flex;flex-direction:column;gap:12px;background:var(--surface2);border:1px solid var(--border)}
 .post-card:hover{border-color:var(--accent)}
 .thumb-wrap{overflow:hidden;margin:-22px -22px 4px;width:calc(100% + 44px);border-bottom:1px solid var(--border)}
-.post-thumb{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;filter:grayscale(100%)}
+.post-thumb{width:100%;aspect-ratio:16/9;object-fit:cover;display:block}
 .post-card h3{font-size:1.08rem;font-weight:700;line-height:1.4}
 .post-card .excerpt{color:var(--muted);font-size:.9rem;line-height:1.65;flex:1;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 .post-meta{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:.8rem;color:var(--muted);border-top:1px solid var(--border);padding-top:10px}.read-more{color:var(--text);font-weight:700}
+.price-tag{font-weight:700;font-size:1rem;color:var(--text)}
+.card-action{display:inline-flex;margin-top:4px;padding:7px 12px;border:1px solid var(--accent);background:var(--accent);color:var(--accentText);text-decoration:none;font-weight:700;font-size:.85rem}
 .empty-state{text-align:center;padding:48px 20px;color:var(--muted);background:var(--surface);border:1px solid var(--border)}.empty-state .big{font-size:2.2rem;margin-bottom:10px;display:inline-block}
 .loader{display:flex;justify-content:center;padding:40px 0}.spinner{width:auto;height:auto;border:0;color:var(--muted)}.spinner::after{content:'Loading...'}
 .sidebar{display:flex;flex-direction:column;align-items:center}.sidebar-sticky{position:sticky;top:88px}
@@ -157,6 +159,16 @@ footer{text-align:center;padding:30px 16px;color:var(--muted);font-size:.85rem;m
       <span class="big">📭</span>
       <h3>No posts yet</h3>
       <p>Check back soon — new content is on the way!</p>
+    </div>
+
+
+    <h2 class="section-title">🛒 Latest Products</h2>
+    <div id="productsLoader" class="loader"><div class="spinner"></div></div>
+    <div id="productsGrid" class="posts-grid"></div>
+    <div id="productsEmpty" class="empty-state" style="display:none">
+      <span class="big">🛍️</span>
+      <h3>No products yet</h3>
+      <p>New products will appear here soon.</p>
     </div>
 
 
@@ -272,42 +284,59 @@ footer{text-align:center;padding:30px 16px;color:var(--muted);font-size:.85rem;m
 const grid=document.getElementById('postsGrid');
   const loader=document.getElementById('loader');
   const empty=document.getElementById('emptyState');
+  const productsGrid=document.getElementById('productsGrid');
+  const productsLoader=document.getElementById('productsLoader');
+  const productsEmpty=document.getElementById('productsEmpty');
 
   function stripHtml(html){const t=document.createElement('div');t.innerHTML=html;return (t.textContent||'').trim().replace(/\s+/g,' ')}
-  function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+  function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+  function moneyLkr(v){const n=Number(v); return Number.isFinite(n) && n>0 ? 'LKR '+n.toLocaleString('en-LK') : '';}
 
-  try{
-    const snap=await getDocs(query(collection(db,'posts'),orderBy('createdAt','desc')));
-    loader.style.display='none';
-    if(snap.empty){empty.style.display='block';}
-    snap.forEach(d=>{
-      const post=d.data();
-      const date=post.createdAt?.toDate
-        ? post.createdAt.toDate().toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'}):'';
-      const excerpt=stripHtml(post.html||'').slice(0,140)||'Click to view this post…';
-      const card=document.createElement('a');
-      card.className='post-card';
-      card.href='post.html?id='+d.id;   /* ← unique URL per post */
-      const thumbHtml = post.image
-        ? `<div class="thumb-wrap"><img class="post-thumb" src="${post.image.replace(/"/g,'&quot;')}" alt="" loading="lazy" onerror="this.parentElement.style.display='none'"></div>`
-        : '';
-      card.innerHTML=`
-        ${thumbHtml}
-        <h3>${esc(post.title||'Untitled Post')}</h3>
-        <p class="excerpt">${esc(excerpt)}</p>
-        <div class="post-meta">
-          <span>📅 ${date}</span>
-          <span class="read-more">View Post <span>→</span></span>
-        </div>`;
-      grid.appendChild(card);
-    });
-  }catch(err){
-    loader.style.display='none';
-    empty.style.display='block';
-    empty.querySelector('h3').textContent='Could not load posts';
-    empty.querySelector('p').textContent=err.message;
+  function renderCard(gridEl, d, data, type){
+    const date=data.createdAt?.toDate
+      ? data.createdAt.toDate().toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'}):'';
+    const excerpt=stripHtml(data.html||'').slice(0,140)||(type==='product'?'Click to view this product…':'Click to view this post…');
+    const card=document.createElement('a');
+    card.className='post-card';
+    card.href=(type==='product'?'product.html?id=':'post.html?id=')+d.id;
+    const thumbHtml = data.image
+      ? `<div class="thumb-wrap"><img class="post-thumb" src="${String(data.image).replace(/"/g,'&quot;')}" alt="" loading="lazy" onerror="this.parentElement.style.display='none'"></div>`
+      : '';
+    const priceHtml = type==='product' && data.price ? `<div class="price-tag">${esc(moneyLkr(data.price))}</div>` : '';
+    const actionText = data.buttonText || (type==='product' ? 'Order Now' : 'View Post');
+    card.innerHTML=`
+      ${thumbHtml}
+      <h3>${esc(data.title||'Untitled')}</h3>
+      ${priceHtml}
+      <p class="excerpt">${esc(excerpt)}</p>
+      <div class="post-meta">
+        <span>📅 ${date}</span>
+        <span class="read-more">${esc(actionText)} <span>→</span></span>
+      </div>`;
+    gridEl.appendChild(card);
   }
+
+  async function loadCollection(type){
+    const isProduct=type==='product';
+    const gridEl=isProduct?productsGrid:grid;
+    const loaderEl=isProduct?productsLoader:loader;
+    const emptyEl=isProduct?productsEmpty:empty;
+    try{
+      const snap=await getDocs(query(collection(db,isProduct?'products':'posts'),orderBy('createdAt','desc')));
+      loaderEl.style.display='none';
+      if(snap.empty){emptyEl.style.display='block'; return;}
+      snap.forEach(d=>renderCard(gridEl,d,d.data(),type));
+    }catch(err){
+      loaderEl.style.display='none';
+      emptyEl.style.display='block';
+      emptyEl.querySelector('h3').textContent=isProduct?'Could not load products':'Could not load posts';
+      emptyEl.querySelector('p').textContent=err.message;
+    }
+  }
+
+  await loadCollection('post');
+  await loadCollection('product');
 </script>
 
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a0961dde2830b77e',t:'MTc4MTA3MDgxNg=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a0d952ab68fb2842',t:'MTc4MTc3NTUyNQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a0961dde2830b77e',t:'MTc4MTA3MDgxNg=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a0d965b70a042842',t:'MTc4MTc3NjMwNQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
