@@ -63,7 +63,7 @@ body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;l
 .post-card{position:relative;overflow:hidden;padding:22px;text-decoration:none;color:var(--text);display:flex;flex-direction:column;gap:12px;background:var(--surface2);border:1px solid var(--border)}
 .post-card:hover{border-color:var(--accent)}
 .thumb-wrap{overflow:hidden;margin:-22px -22px 4px;width:calc(100% + 44px);border-bottom:1px solid var(--border)}
-.post-thumb{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;filter:grayscale(100%)}
+.post-thumb{width:100%;aspect-ratio:16/9;object-fit:cover;display:block}
 .post-card h3{font-size:1.08rem;font-weight:700;line-height:1.4}
 .post-card .excerpt{color:var(--muted);font-size:.9rem;line-height:1.65;flex:1;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 .post-meta{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:.8rem;color:var(--muted);border-top:1px solid var(--border);padding-top:10px}.read-more{color:var(--text);font-weight:700}
@@ -82,7 +82,7 @@ footer{text-align:center;padding:30px 16px;color:var(--muted);font-size:.85rem;m
 .admin-wrap{max-width:980px;margin:0 auto;padding:24px 18px}.admin-head{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:22px}.admin-head h2{color:var(--text)}.admin-panel{padding:26px;margin-bottom:24px}.admin-panel h3{margin-bottom:18px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;color:var(--text)}
 .tabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}.tab{padding:8px 16px;cursor:pointer;font-size:.85rem;font-weight:700;background:var(--surface);border:1px solid var(--border);color:var(--muted)}.tab.active{background:var(--accent);color:var(--accentText);border-color:var(--accent)}.preview-frame{width:100%;height:420px;border:1px solid var(--border);background:#fff}
 .admin-post-item{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:16px 18px;margin-bottom:12px;background:var(--surface2);border:1px solid var(--border)}.admin-post-item .info{min-width:0;flex:1}.admin-post-item .info b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.admin-post-item .info small{color:var(--muted)}.post-url{display:flex;align-items:center;gap:8px;margin-top:9px;flex-wrap:wrap}.post-url code{background:var(--surface);border:1px solid var(--border);padding:5px 9px;font-size:.72rem;color:var(--text);max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.copy-btn{padding:5px 10px;border:1px solid var(--border);background:transparent;color:var(--text);font-size:.72rem;font-weight:700;cursor:pointer}.copy-btn:hover{background:var(--accent);color:var(--accentText)}.admin-post-item .actions{display:flex;gap:8px;flex-shrink:0}.icon-btn{width:38px;height:38px;border:1px solid var(--border);cursor:pointer;background:transparent;color:var(--text);font-size:1rem;display:flex;align-items:center;justify-content:center}.icon-btn:hover{background:var(--accent);color:var(--accentText)}
-#imgPreview{filter:grayscale(100%);border:1px solid var(--border)!important;border-radius:0!important;box-shadow:none!important}
+#imgPreview{border:1px solid var(--border)!important;border-radius:0!important;box-shadow:none!important}
 @media(max-width:560px){.admin-panel{padding:20px 14px}.auth-card{padding:28px 20px}.admin-post-item{flex-direction:column;align-items:flex-start}.admin-post-item .actions{align-self:flex-end}}
 
 </style>
@@ -131,24 +131,46 @@ footer{text-align:center;padding:30px 16px;color:var(--muted);font-size:.85rem;m
   </div>
 
   <div class="admin-panel glass-card">
-    <h3 id="editorTitle">✍️ Add New Post</h3>
+    <h3 id="editorTitle">✍️ Add New Item</h3>
     <div id="postMsg" class="msg"></div>
 
     <div class="field">
-      <label>📌 POST TITLE</label>
-      <input type="text" id="postTitle" placeholder="e.g. Watch Full Video — Episode 05">
+      <label>📂 CONTENT TYPE</label>
+      <select id="contentType" style="width:100%;padding:12px 14px;background:var(--bg);border:1px solid var(--border);color:var(--text);font-family:inherit">
+        <option value="post">Post</option>
+        <option value="product">Product</option>
+      </select>
     </div>
 
     <div class="field">
-      <label>🖼 POST IMAGE (thumbnail — optional)</label>
+      <label id="titleLabel">📌 TITLE</label>
+      <input type="text" id="postTitle" placeholder="e.g. Watch Full Video / Product Name">
+    </div>
+
+    <div class="field" id="priceField" style="display:none">
+      <label>💰 PRODUCT PRICE (LKR)</label>
+      <input type="number" id="productPrice" placeholder="e.g. 2500" min="0" step="1">
+    </div>
+
+    <div class="field">
+      <label>🔘 CUSTOM BUTTON</label>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <input type="text" id="buttonText" placeholder="Watch Now / Order Now / Download Now / Purchase">
+        <input type="url" id="buttonUrl" placeholder="https://example.com/target-link">
+      </div>
+      <p style="color:var(--muted);font-size:.75rem;margin-top:6px">Button text and click link can be added for both posts and products.</p>
+    </div>
+
+    <div class="field">
+      <label>🖼 IMAGE (thumbnail — optional)</label>
       <div class="tabs">
         <div class="tab active" id="tabImgUrl">🔗 Image URL</div>
         <div class="tab" id="tabImgUpload">📤 Upload Image</div>
       </div>
-      <input type="text" id="imgUrlInput" placeholder="https://example.com/image.jpg  (or YouTube thumbnail URL)">
+      <input type="text" id="imgUrlInput" placeholder="https://example.com/image.jpg">
       <div id="imgUploadBox" style="display:none">
         <input type="file" id="imgFileInput" accept="image/*" style="padding:11px">
-        <p style="color:var(--muted);font-size:.75rem;margin-top:6px">📦 Image is auto-compressed &amp; saved with the post — no extra setup needed</p>
+        <p style="color:var(--muted);font-size:.75rem;margin-top:6px">📦 Image is auto-compressed &amp; saved with the item.</p>
       </div>
       <div id="imgPreviewWrap" style="display:none;margin-top:12px;position:relative;max-width:340px">
         <img id="imgPreview" style="width:100%;border:1px solid var(--border)" alt="preview">
@@ -157,18 +179,18 @@ footer{text-align:center;padding:30px 16px;color:var(--muted);font-size:.85rem;m
     </div>
 
     <div class="field">
-      <label>💻 POST HTML CODE (type / paste your full HTML here)</label>
+      <label id="htmlLabel">💻 POST / PRODUCT HTML CODE</label>
       <div class="tabs">
         <div class="tab active" id="tabCode">⌨️ Code</div>
         <div class="tab" id="tabPreview">👁 Live Preview</div>
       </div>
       <textarea id="postHtml" spellcheck="false" placeholder="&lt;h1&gt;Hello&lt;/h1&gt;
-&lt;p&gt;Type your full HTML code here — styles, scripts, buttons, anything!&lt;/p&gt;"></textarea>
+&lt;p&gt;Type your full HTML code here — colors, styles, scripts, buttons, anything!&lt;/p&gt;"></textarea>
       <iframe id="previewFrame" class="preview-frame" style="display:none" frameborder="0"></iframe>
     </div>
 
     <div style="display:flex;gap:12px;flex-wrap:wrap">
-      <button class="btn" id="saveBtn">💾 Publish Post</button>
+      <button class="btn" id="saveBtn">💾 Publish Item</button>
       <button class="btn ghost" id="cancelEditBtn" style="display:none">✖ Cancel Edit</button>
     </div>
   </div>
@@ -178,6 +200,13 @@ footer{text-align:center;padding:30px 16px;color:var(--muted);font-size:.85rem;m
     <div id="adminLoader" class="loader"><div class="spinner"></div></div>
     <div id="adminPostList"></div>
     <div id="adminEmpty" style="display:none;color:var(--muted);text-align:center;padding:20px">No posts yet — create your first post above! 🚀</div>
+  </div>
+
+  <div class="admin-panel glass-card">
+    <h3>🛒 Manage Products <span id="productCount" style="color:var(--muted);font-size:.85rem;font-weight:400"></span></h3>
+    <div id="productLoader" class="loader"><div class="spinner"></div></div>
+    <div id="adminProductList"></div>
+    <div id="productEmpty" style="display:none;color:var(--muted);text-align:center;padding:20px">No products yet — add your first product above! 🛍️</div>
   </div>
 
 </section>
@@ -232,6 +261,7 @@ footer{text-align:center;padding:30px 16px;color:var(--muted);font-size:.85rem;m
 const $=id=>document.getElementById(id);
   const loginSection=$('loginSection'), dashSection=$('dashSection'), logoutBtn=$('logoutBtn');
   let editingId=null;
+  let editingType='post';
 
   onAuthStateChanged(auth, user=>{
     if(user && user.email?.toLowerCase()===ADMIN_EMAIL.toLowerCase()){
@@ -239,7 +269,7 @@ const $=id=>document.getElementById(id);
       dashSection.style.display='block';
       logoutBtn.style.display='inline-flex';
       $('adminEmailLabel').textContent='✅ Logged in as '+user.email;
-      loadPosts();
+      loadPosts();loadProducts();
     }else{
       if(user) signOut(auth);
       loginSection.style.display='block';
@@ -354,43 +384,132 @@ const $=id=>document.getElementById(id);
     setTimeout(()=>m.classList.remove('show'),6000);
   }
 
-  function postUrl(id){
-    return new URL('post.html?id='+id, location.href).href;
+  function currentType(){ return $('contentType').value || 'post'; }
+  function collectionName(type){ return type === 'product' ? 'products' : 'posts'; }
+  function itemUrl(id,type=currentType()){
+    return new URL((type === 'product' ? 'product.html?id=' : 'post.html?id=')+id, location.href).href;
   }
+  function moneyLkr(v){const n=Number(v); return Number.isFinite(n) && n>0 ? 'LKR '+n.toLocaleString('en-LK') : '';}
+
+  function updateEditorForType(){
+    const type=currentType();
+    const isProduct=type==='product';
+    $('priceField').style.display=isProduct?'block':'none';
+    $('editorTitle').textContent=(editingId?'✏️ Edit ':'✍️ Add New ')+(isProduct?'Product':'Post');
+    $('titleLabel').textContent=isProduct?'📌 PRODUCT TITLE':'📌 POST TITLE';
+    $('htmlLabel').textContent=isProduct?'💻 PRODUCT HTML / DESCRIPTION':'💻 POST HTML CODE';
+    $('saveBtn').textContent=editingId?'💾 Update '+(isProduct?'Product':'Post'):'💾 Publish '+(isProduct?'Product':'Post');
+    if(!$('buttonText').value){ $('buttonText').placeholder=isProduct?'Order Now / Purchase':'Watch Now / Download Now'; }
+  }
+  $('contentType').addEventListener('change', updateEditorForType);
+  updateEditorForType();
 
   $('saveBtn').addEventListener('click', async ()=>{
+    const type=currentType();
     const title=$('postTitle').value.trim();
     const html=$('postHtml').value.trim();
-    if(!title){showMsg('⚠️ Please enter a post title!',false);return}
-    if(!html){showMsg('⚠️ Please type the HTML code for the post!',false);return}
+    const price=Number($('productPrice').value || 0);
+    const buttonText=$('buttonText').value.trim();
+    const buttonUrl=$('buttonUrl').value.trim();
+    if(!title){showMsg('⚠️ Please enter a title!',false);return}
+    if(type==='product' && (!Number.isFinite(price) || price<=0)){showMsg('⚠️ Please enter product price in LKR!',false);return}
+    if(!html){showMsg('⚠️ Please type the HTML code / description!',false);return}
+    if((buttonText && !buttonUrl) || (!buttonText && buttonUrl)){showMsg('⚠️ Add both button text and button link, or leave both empty.',false);return}
     $('saveBtn').textContent='⏳ Saving…';
+    const data={title,html,image:postImage||'',buttonText,buttonUrl,updatedAt:serverTimestamp()};
+    if(type==='product') data.price=price;
     try{
       if(editingId){
-        await updateDoc(doc(db,'posts',editingId),{title,html,image:postImage||'',updatedAt:serverTimestamp()});
-        showMsg('✅ Post updated! URL: '+postUrl(editingId),true);
+        await updateDoc(doc(db,collectionName(editingType),editingId),data);
+        showMsg('✅ '+(editingType==='product'?'Product':'Post')+' updated! URL: '+itemUrl(editingId,editingType),true);
       }else{
-        const ref=await addDoc(collection(db,'posts'),{title,html,image:postImage||'',createdAt:serverTimestamp()});
-        showMsg('🎉 Post published! Unique URL: '+postUrl(ref.id),true);
+        data.createdAt=serverTimestamp();
+        const ref=await addDoc(collection(db,collectionName(type)),data);
+        showMsg('🎉 '+(type==='product'?'Product':'Post')+' published! Unique URL: '+itemUrl(ref.id,type),true);
       }
-      resetEditor();loadPosts();
+      resetEditor();loadPosts();loadProducts();
     }catch(err){
       showMsg('⛔ Save failed: '+err.message,false);
     }
-    $('saveBtn').textContent='💾 Publish Post';
+    updateEditorForType();
   });
 
   function resetEditor(){
-    editingId=null;
-    $('postTitle').value='';$('postHtml').value='';
+    editingId=null; editingType=currentType();
+    $('postTitle').value='';$('postHtml').value='';$('productPrice').value='';
+    $('buttonText').value='';$('buttonUrl').value='';
     $('imgUrlInput').value='';$('imgFileInput').value='';
     showImgPreview('');
-    $('editorTitle').textContent='✍️ Add New Post';
-    $('saveBtn').textContent='💾 Publish Post';
     $('cancelEditBtn').style.display='none';
     $('tabCode').click();
     $('tabImgUrl').click();
+    updateEditorForType();
   }
   $('cancelEditBtn').addEventListener('click',resetEditor);
+
+  function buildItemRow(d, data, type, list){
+    const url=itemUrl(d.id,type);
+    const date=data.createdAt?.toDate
+      ? data.createdAt.toDate().toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'}):'';
+    const item=document.createElement('div');
+    item.className='admin-post-item';
+
+    const info=document.createElement('div');
+    info.className='info';
+    const b=document.createElement('b');b.textContent=(type==='product'?'🛒 ':'📝 ')+(data.title||'Untitled');
+    const sm=document.createElement('small');
+    sm.textContent='📅 '+date+(type==='product' && data.price ? '  •  💰 '+moneyLkr(data.price) : '')+(data.buttonText ? '  •  🔘 '+data.buttonText : '');
+    const urlRow=document.createElement('div');
+    urlRow.className='post-url';
+    const code=document.createElement('code');code.textContent=url;
+    const copyB=document.createElement('button');
+    copyB.className='copy-btn';copyB.textContent='📋 Copy URL';
+    copyB.onclick=()=>{
+      navigator.clipboard.writeText(url).then(()=>{
+        copyB.textContent='✅ Copied!';
+        setTimeout(()=>copyB.textContent='📋 Copy URL',2000);
+      });
+    };
+    urlRow.append(code,copyB);
+    info.append(b,sm,urlRow);
+
+    const actions=document.createElement('div');
+    actions.className='actions';
+    const viewB=document.createElement('button');
+    viewB.className='icon-btn';viewB.title='View';viewB.textContent='👁';
+    viewB.onclick=()=>window.open(url,'_blank');
+
+    const editB=document.createElement('button');
+    editB.className='icon-btn edit';editB.title='Edit';editB.textContent='✏️';
+    editB.onclick=()=>{
+      editingId=d.id; editingType=type;
+      $('contentType').value=type;
+      $('postTitle').value=data.title||'';
+      $('postHtml').value=data.html||'';
+      $('productPrice').value=data.price||'';
+      $('buttonText').value=data.buttonText||'';
+      $('buttonUrl').value=data.buttonUrl||'';
+      if(data.image){
+        showImgPreview(data.image);
+        if(String(data.image).startsWith('http')){$('imgUrlInput').value=data.image;$('tabImgUrl').click();}
+        else{$('tabImgUpload').click();}
+      }else{showImgPreview('');$('imgUrlInput').value='';}
+      $('cancelEditBtn').style.display='inline-flex';
+      updateEditorForType();
+      window.scrollTo({top:0,behavior:'smooth'});
+    };
+
+    const delB=document.createElement('button');
+    delB.className='icon-btn del';delB.title='Delete';delB.textContent='🗑';
+    delB.onclick=async ()=>{
+      if(!confirm('Delete "'+(data.title||'this item')+'" permanently?'))return;
+      await deleteDoc(doc(db,collectionName(type),d.id));
+      type==='product'?loadProducts():loadPosts();
+    };
+    actions.append(viewB,editB,delB);
+    item.append(info,actions);
+    list.appendChild(item);
+  }
 
   async function loadPosts(){
     const list=$('adminPostList'), loaderEl=$('adminLoader'), emptyEl=$('adminEmpty');
@@ -400,78 +519,27 @@ const $=id=>document.getElementById(id);
       loaderEl.style.display='none';
       $('postCount').textContent='('+snap.size+' posts)';
       if(snap.empty){emptyEl.style.display='block';return}
-
-      snap.forEach(d=>{
-        const post=d.data();
-        const url=postUrl(d.id);
-        const date=post.createdAt?.toDate
-          ? post.createdAt.toDate().toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'}):'';
-        const item=document.createElement('div');
-        item.className='admin-post-item';
-
-        const info=document.createElement('div');
-        info.className='info';
-        const b=document.createElement('b');b.textContent=post.title||'Untitled';
-        const sm=document.createElement('small');sm.textContent='📅 '+date;
-        const urlRow=document.createElement('div');
-        urlRow.className='post-url';
-        const code=document.createElement('code');code.textContent=url;
-        const copyB=document.createElement('button');
-        copyB.className='copy-btn';copyB.textContent='📋 Copy URL';
-        copyB.onclick=()=>{
-          navigator.clipboard.writeText(url).then(()=>{
-            copyB.textContent='✅ Copied!';
-            setTimeout(()=>copyB.textContent='📋 Copy URL',2000);
-          });
-        };
-        urlRow.append(code,copyB);
-        info.append(b,sm,urlRow);
-
-        const actions=document.createElement('div');
-        actions.className='actions';
-
-        const viewB=document.createElement('button');
-        viewB.className='icon-btn';viewB.title='View';viewB.textContent='👁';
-        viewB.onclick=()=>window.open(url,'_blank');
-
-        const editB=document.createElement('button');
-        editB.className='icon-btn edit';editB.title='Edit';editB.textContent='✏️';
-        editB.onclick=()=>{
-          editingId=d.id;
-          $('postTitle').value=post.title||'';
-          $('postHtml').value=post.html||'';
-          if(post.image){
-            showImgPreview(post.image);
-            if(post.image.startsWith('http')){$('imgUrlInput').value=post.image;$('tabImgUrl').click();}
-            else{$('tabImgUpload').click();}
-          }else{
-            showImgPreview('');$('imgUrlInput').value='';
-          }
-          $('editorTitle').textContent='✏️ Edit Post';
-          $('saveBtn').textContent='💾 Update Post';
-          $('cancelEditBtn').style.display='inline-flex';
-          window.scrollTo({top:0,behavior:'smooth'});
-        };
-
-        const delB=document.createElement('button');
-        delB.className='icon-btn del';delB.title='Delete';delB.textContent='🗑';
-        delB.onclick=async ()=>{
-          if(!confirm('Delete "'+(post.title||'this post')+'" permanently?'))return;
-          await deleteDoc(doc(db,'posts',d.id));
-          loadPosts();
-        };
-
-        actions.append(viewB,editB,delB);
-        item.append(info,actions);
-        list.appendChild(item);
-      });
+      snap.forEach(d=>buildItemRow(d,d.data(),'post',list));
     }catch(err){
-      loaderEl.style.display='none';
-      emptyEl.style.display='block';
-      emptyEl.textContent='⛔ '+err.message;
+      loaderEl.style.display='none'; emptyEl.style.display='block'; emptyEl.textContent='⛔ '+err.message;
     }
   }
+
+  async function loadProducts(){
+    const list=$('adminProductList'), loaderEl=$('productLoader'), emptyEl=$('productEmpty');
+    list.innerHTML='';emptyEl.style.display='none';loaderEl.style.display='flex';
+    try{
+      const snap=await getDocs(query(collection(db,'products'),orderBy('createdAt','desc')));
+      loaderEl.style.display='none';
+      $('productCount').textContent='('+snap.size+' products)';
+      if(snap.empty){emptyEl.style.display='block';return}
+      snap.forEach(d=>buildItemRow(d,d.data(),'product',list));
+    }catch(err){
+      loaderEl.style.display='none'; emptyEl.style.display='block'; emptyEl.textContent='⛔ '+err.message;
+    }
+  }
+
 </script>
 
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a095e5524b943660',t:'MTc4MTA2ODUwMA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a0d954c0192e5132',t:'MTc4MTc3NTYxMA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a095e5524b943660',t:'MTc4MTA2ODUwMA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a0d9639b08a724d1',t:'MTc4MTc3NjIxOQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
