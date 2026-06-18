@@ -64,7 +64,7 @@ body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;l
 .post-card{position:relative;overflow:hidden;padding:22px;text-decoration:none;color:var(--text);display:flex;flex-direction:column;gap:12px;background:var(--surface2);border:1px solid var(--border)}
 .post-card:hover{border-color:var(--accent)}
 .thumb-wrap{overflow:hidden;margin:-22px -22px 4px;width:calc(100% + 44px);border-bottom:1px solid var(--border)}
-.post-thumb{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;filter:grayscale(100%)}
+.post-thumb{width:100%;aspect-ratio:16/9;object-fit:cover;display:block}
 .post-card h3{font-size:1.08rem;font-weight:700;line-height:1.4}
 .post-card .excerpt{color:var(--muted);font-size:.9rem;line-height:1.65;flex:1;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 .post-meta{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:.8rem;color:var(--muted);border-top:1px solid var(--border);padding-top:10px}.read-more{color:var(--text);font-weight:700}
@@ -76,9 +76,10 @@ footer{text-align:center;padding:30px 16px;color:var(--muted);font-size:.85rem;m
 @media(max-width:1000px){.page{grid-template-columns:1fr}.sidebar{display:none}}
 @media(max-width:760px){.ad-728{display:none}.ad-320-mobile{display:flex}}
 @media(max-width:560px){.navbar{align-items:flex-start;padding:12px 14px}.logo{font-size:1.15rem}.nav-links{gap:6px}.nav-btn,.theme-toggle{padding:7px 10px;font-size:.78rem}.ad-468{transform:scale(.66);transform-origin:center top;height:44px}.posts-grid{grid-template-columns:1fr}.page{padding:18px 14px}}
-.post-hero-img{width:100%;max-height:420px;object-fit:cover;margin-top:18px;display:none;border:1px solid var(--border);filter:grayscale(100%)}
+.post-hero-img{width:100%;max-height:420px;object-fit:cover;margin-top:18px;display:none;border:1px solid var(--border)}
 .post-view-head{padding:26px 0 6px;border-bottom:1px solid var(--border)}.post-view-head h1{font-size:clamp(1.35rem,4vw,2.1rem);line-height:1.35;color:var(--text);background:none;-webkit-text-fill-color:currentColor}.post-view-head .date{color:var(--muted);font-size:.85rem;margin-top:8px}
 .post-frame{width:100%;min-height:75vh;margin-top:20px;background:var(--surface2);border:1px solid var(--border)}
+.action-wrap{margin:18px 0;text-align:center}.action-btn{display:inline-flex;padding:12px 26px;border:1px solid var(--accent);background:var(--accent);color:var(--accentText);font-weight:700;text-decoration:none}
 
 </style>
 </head>
@@ -156,6 +157,7 @@ footer{text-align:center;padding:30px 16px;color:var(--muted);font-size:.85rem;m
 
     <div id="loader" class="loader"><div class="spinner"></div></div>
     <iframe id="postFrame" class="post-frame" style="display:none" frameborder="0"></iframe>
+    <div class="action-wrap"><a id="postActionBtn" class="action-btn" href="#" target="_blank" rel="noopener" style="display:none">Watch Now</a></div>
 
 
     <!-- 🔸 AD: 160x300 Vertical — extra in-content unit -->
@@ -275,6 +277,7 @@ const id=new URLSearchParams(location.search).get('id');
   const dateEl=document.getElementById('postDate');
   const frame=document.getElementById('postFrame');
   const loader=document.getElementById('loader');
+  const actionBtn=document.getElementById('postActionBtn');
 
   if(!id){
     titleEl.textContent='Post not found';
@@ -301,6 +304,11 @@ const id=new URLSearchParams(location.search).get('id');
         }
         frame.style.display='block';
         frame.srcdoc=post.html||'<p style="color:#888;font-family:sans-serif;padding:20px">Empty post</p>';
+        if(post.buttonText && post.buttonUrl){
+          actionBtn.textContent=post.buttonText;
+          actionBtn.href=post.buttonUrl;
+          actionBtn.style.display='inline-flex';
+        }
         frame.onload=()=>{
           try{
             const h=frame.contentDocument.documentElement.scrollHeight;
@@ -316,5 +324,5 @@ const id=new URLSearchParams(location.search).get('id');
   }
 </script>
 
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a0961e3b7a19b77e',t:'MTc4MTA3MDgzMQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a0d955540cf45132',t:'MTc4MTc3NTYzNA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a0961e3b7a19b77e',t:'MTc4MTA3MDgzMQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a0d96653f9f92842',t:'MTc4MTc3NjMzMA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
