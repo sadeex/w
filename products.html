@@ -4,7 +4,7 @@
   <script src="https://hecticwelcomingassociation.com/dd/3e/63/dd3e63cb85c7f37892c476ea203734ac.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Product — Liger Co</title>
+<title>Product — Classic Creative Base59</title>
 
 
 <script>
@@ -16,29 +16,9 @@
 </script>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Georgia,'Times New Roman',serif}
-:root{
-  --bg:#ffffff;
-  --text:#111111;
-  --muted:#555555;
-  --surface:#f7f7f7;
-  --surface2:#ffffff;
-  --border:#d8d8d8;
-  --accent:#000000;
-  --accentText:#ffffff;
-}
-html[data-theme="dark"]{
-  --bg:#050505;
-  --text:#f5f5f5;
-  --muted:#b8b8b8;
-  --surface:#111111;
-  --surface2:#0b0b0b;
-  --border:#333333;
-  --accent:#ffffff;
-  --accentText:#000000;
-}
-*{animation:none!important;transition:none!important}
-html{scroll-behavior:auto}
+*{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display","Helvetica Neue",Arial,sans-serif}
+:root{--bg:#ffffff;--text:#0a2540;--muted:#5a6a7a;--surface:#f4f7fb;--surface2:#ffffff;--border:#d0d8e2;--accent:#0a2540;--accentText:#ffffff}
+html[data-theme="dark"]{--bg:#0a192f;--text:#e6f1ff;--muted:#8fa8c8;--surface:#112240;--surface2:#0f2442;--border:#1c3a5e;--accent:#64b5f6;--accentText:#0a192f} html{scroll-behavior:auto}
 body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;line-height:1.6}
 .navbar{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;gap:16px;max-width:1180px;margin:0 auto;padding:16px 20px;background:var(--bg);border-bottom:1px solid var(--border)}
 .logo{display:flex;align-items:center;text-decoration:none;color:var(--text);font-size:1.35rem;font-weight:700;letter-spacing:.5px}
@@ -83,11 +63,46 @@ footer{text-align:center;padding:30px 16px;color:var(--muted);font-size:.85rem;m
 .price-tag{color:var(--text)}
 
 </style>
+<style>
+  /* iOS-style smooth transitions and micro-interactions */
+  body,a,button,input,textarea,select,.card,.item-card,.logo,.f-logo,.nav-btn,.theme-toggle,.btn,.tab,.action-btn,.copy-btn,.icon-btn{
+    transition:background-color 0.25s ease,color 0.25s ease,border-color 0.25s ease,box-shadow 0.25s ease,transform 0.2s ease;
+  }
+  .nav-btn,.theme-toggle,.btn,.tab,.action-btn,.copy-btn,.icon-btn{
+    will-change:transform;
+  }
+  .nav-btn:hover,.theme-toggle:hover,.btn:hover,.tab:hover,.action-btn:hover,.copy-btn:hover,.icon-btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 6px 16px rgba(0,0,0,0.12);
+  }
+  .nav-btn:active,.theme-toggle:active,.btn:active,.tab:active,.action-btn:active,.copy-btn:active,.icon-btn:active{
+    transform:translateY(0) scale(0.97);
+  }
+  .item-card{
+    transition:transform 0.3s ease,box-shadow 0.3s ease,border-color 0.25s ease;
+  }
+  .item-card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 14px 30px rgba(0,0,0,0.14);
+  }
+  @keyframes fadeInUp{
+    from{opacity:0;transform:translateY(18px)}
+    to{opacity:1;transform:translateY(0)}
+  }
+  .item-card{
+    opacity:0;
+    animation:fadeInUp 0.45s ease forwards;
+    animation-delay:calc(var(--i,0) * 0.05s);
+  }
+  .hero,.section-head,.tabs{
+    animation:fadeInUp 0.6s ease forwards;
+  }
+</style>
 </head>
 <body>
 <nav class="navbar">
   <a class="logo" href="index.html">
-<span class="logo-text">Liger&nbsp;Co</span>
+<span class="logo-text">Classic Creative Base59</span>
   </a>
   <div class="nav-links">
     <button class="theme-toggle" id="themeToggle" type="button">Theme</button>
@@ -234,8 +249,8 @@ footer{text-align:center;padding:30px 16px;color:var(--muted);font-size:.85rem;m
 </div>
 
 <footer>
-<div class="f-logo">LIGER CO</div>
-  © 2026 Liger Co — All rights reserved.
+<div class="f-logo">CLASSIC CREATIVE BASE59</div>
+  © 2026 Classic Creative Base59 — All rights reserved.
 </footer>
 
 <!-- 🔸 AD: Direct script #2 (site-wide popunder) -->
@@ -295,7 +310,7 @@ const id=new URLSearchParams(location.search).get('id');
       }else{
         const post=snap.data();
         titleEl.textContent=post.title||'Untitled Product';
-        document.title=(post.title||'Product')+' — Liger Co';
+        document.title=(post.title||'Product')+' — Classic Creative Base59';
         if(post.createdAt?.toDate){
           dateEl.textContent='📅 '+post.createdAt.toDate().toLocaleString('en-GB',
             {day:'numeric',month:'long',year:'numeric',hour:'2-digit',minute:'2-digit'});
@@ -311,7 +326,7 @@ const id=new URLSearchParams(location.search).get('id');
           heroImg.onerror=()=>{heroImg.style.display='none'};
         }
         frame.style.display='block';
-        frame.srcdoc=post.html||'<p style="color:#888;font-family:sans-serif;padding:20px">Empty product</p>';
+        frame.srcdoc=post.html||'<p style="color:#888;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','SF Pro Display','Helvetica Neue',Arial,sans-serif;padding:20px">Empty product</p>';
         if(post.buttonUrl){
           actionBtn.textContent=post.buttonText || 'Order Now';
           actionBtn.href=post.buttonUrl;
@@ -332,5 +347,5 @@ const id=new URLSearchParams(location.search).get('id');
   }
 </script>
 
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a0961e3b7a19b77e',t:'MTc4MTA3MDgzMQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a0d9672288442842',t:'MTc4MTc3NjM2Mw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a0961e3b7a19b77e',t:'MTc4MTA3MDgzMQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a0d9672288442842',t:'MTc4MTc3NjM2Mw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a1172b4c181624d1',t:'MTc4MjQyNDAzMA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
