@@ -478,6 +478,21 @@
       border: none; cursor: pointer;
     }
     .btn-order:hover { background: var(--blue-light); }
+
+    /* Custom Button Styles */
+    .btn-order.custom-btn-green, .btn-gold.custom-btn-green { background: #16a34a !important; color: #FFFFFF !important; }
+    .btn-order.custom-btn-green:hover, .btn-gold.custom-btn-green:hover { background: #15803d !important; color: #FFFFFF !important; }
+
+    .btn-order.custom-btn-blue, .btn-gold.custom-btn-blue { background: #2563eb !important; color: #FFFFFF !important; }
+    .btn-order.custom-btn-blue:hover, .btn-gold.custom-btn-blue:hover { background: #1d4ed8 !important; color: #FFFFFF !important; }
+
+    .btn-order.custom-btn-red, .btn-gold.custom-btn-red { background: #dc2626 !important; color: #FFFFFF !important; }
+    .btn-order.custom-btn-red:hover, .btn-gold.custom-btn-red:hover { background: #b91c1c !important; color: #FFFFFF !important; }
+
+    .btn-order.custom-btn-dark, .btn-gold.custom-btn-dark { background: #334155 !important; color: #FFFFFF !important; }
+    .btn-order.custom-btn-dark:hover, .btn-gold.custom-btn-dark:hover { background: #1e293b !important; color: #FFFFFF !important; }
+
+    [data-theme="dark"] .btn-order.custom-btn-dark, [data-theme="dark"] .btn-gold.custom-btn-dark { color: #EAF2FF !important; border: 1px solid rgba(138,180,255,0.2) !important; }
     .no-posts {
       text-align: center; color: var(--muted); padding: 60px 20px;
       font-size: 1rem; grid-column: 1/-1;
@@ -695,7 +710,7 @@
     [data-theme="dark"] .readmore-btn:hover { color: #A7D0FF; }
 
     .post-view-price { font-size: 1.5rem; font-weight: 800; margin-bottom: 28px; animation: fadeUp 0.5s ease 0.3s both; }
-    #pv-order-btn { animation: fadeUp 0.5s ease 0.35s both; }
+    #pv-order-btn, #pv-buttons { animation: fadeUp 0.5s ease 0.35s both; }
 
     /* Notification toast */
     #toast {
@@ -1833,7 +1848,8 @@
     <p class="post-view-desc collapsed" id="pv-desc"></p>
     <button id="pv-readmore-btn" class="readmore-btn" onclick="toggleReadMore()" style="display:none;">Read More ▼</button>
     <div class="post-view-price gold-text" id="pv-price"></div>
-    <a id="pv-order-btn" href="#" target="_blank" class="btn-gold" style="display:inline-block;">Order Now 🛒</a>
+    <div id="pv-buttons" style="display:flex; flex-wrap:wrap; gap:12px; margin-top:10px;"></div>
+    <a id="pv-order-btn" href="#" target="_blank" class="btn-gold" style="display:none;">Order Now 🛒</a>
   </div>
 </div>
 
@@ -1890,13 +1906,10 @@
         <div style="font-size:0.75rem;margin-top:5px;color:#6B7A92;">You can type numbers or custom text.</div>
       </div>
       <div class="form-group">
-        <label class="form-label">Order Link (WhatsApp / Email / URL)</label>
-        <input type="text" class="form-input" id="p-order-link" placeholder="https://wa.me/94xxxxxxxxx or mailto:..."/>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Custom Button Text</label>
-        <input type="text" class="form-input" id="p-button-text" placeholder="e.g. Order Now, Buy Now, Download Now" maxlength="28"/>
-        <div style="font-size:0.75rem;margin-top:5px;color:#6B7A92;">This replaces the public product button text.</div>
+        <label class="form-label">Custom Buttons (kamathi gaanak add karanna)</label>
+        <div id="custom-buttons-list" style="display:flex; flex-direction:column; gap:12px; margin-bottom:12px;"></div>
+        <button type="button" class="btn-gold" style="padding:10px 18px; font-size:0.88rem; background:var(--blue-light); border:none; cursor:pointer;" onclick="addCustomButtonField()">➕ Add Another Button</button>
+        <div style="font-size:0.78rem; margin-top:8px; color:#6B7A92;">Add custom buttons (e.g. 'Order Now', 'Download Now', 'Live Demo') with custom links and colors.</div>
       </div>
       <div class="form-group">
         <label class="form-label">Product Image</label>
@@ -2084,10 +2097,26 @@ async function submitPost() {
   const cat = document.getElementById('p-cat').value.trim();
   const desc = document.getElementById('p-desc').value.trim();
   const priceRaw = document.getElementById('p-price').value.trim();
-  const orderLink = document.getElementById('p-order-link').value.trim();
-  const buttonText = document.getElementById('p-button-text').value.trim();
 
   if(!title || !cat) { showToast('Title and Category are required!', 'error'); return; }
+
+  const buttons = [];
+  document.querySelectorAll('#custom-buttons-list .custom-btn-item').forEach(item => {
+    const text = item.querySelector('.btn-text-input').value.trim();
+    const link = item.querySelector('.btn-link-input').value.trim();
+    const style = item.querySelector('.btn-style-input').value;
+    if(text) {
+      buttons.push({ text, link: link || '', style });
+    }
+  });
+
+  if(buttons.length === 0) {
+    showToast('Please add at least one button with text!', 'error');
+    return;
+  }
+
+  const buttonText = buttons[0]?.text || 'Order Now';
+  const orderLink = buttons[0]?.link || '';
 
   let imageUrl = '';
   if(currentImgTab === 'url') {
@@ -2112,6 +2141,7 @@ async function submitPost() {
         price,
         orderLink,
         buttonText,
+        buttons,
         imageUrl: imageUrl || oldPost.imageUrl || '',
         updatedAt: firebase.firestore.FieldValue.serverTimestamp()
       });
@@ -2125,6 +2155,7 @@ async function submitPost() {
         price,
         orderLink,
         buttonText,
+        buttons,
         imageUrl,
         createdAt: firebase.firestore.FieldValue.serverTimestamp(),
         createdBy: auth.currentUser.email || auth.currentUser.uid
@@ -2145,7 +2176,7 @@ async function submitPost() {
 }
 
 function resetPostForm() {
-  ['p-title','p-cat','p-desc','p-price','p-order-link','p-button-text','p-img-url'].forEach(id => {
+  ['p-title','p-cat','p-desc','p-price','p-img-url'].forEach(id => {
     const el = document.getElementById(id);
     if(el) el.value = '';
   });
@@ -2160,6 +2191,12 @@ function resetPostForm() {
   const cancelBtn = document.getElementById('cancel-edit-btn');
   if(publishBtn) publishBtn.textContent = 'Publish Product 🚀';
   if(cancelBtn) cancelBtn.style.display = 'none';
+
+  const btnList = document.getElementById('custom-buttons-list');
+  if(btnList) {
+    btnList.innerHTML = '';
+    addCustomButtonField('Order Now', '', 'gold');
+  }
 }
 
 function cancelEditPost() {
@@ -2214,8 +2251,20 @@ function editPost(id) {
   document.getElementById('p-cat').value = d.category || '';
   document.getElementById('p-desc').value = d.description || '';
   document.getElementById('p-price').value = d.price || '';
-  document.getElementById('p-order-link').value = d.orderLink || '';
   document.getElementById('p-img-url').value = d.imageUrl || '';
+
+  const btnList = document.getElementById('custom-buttons-list');
+  if(btnList) {
+    btnList.innerHTML = '';
+    if(d.buttons && Array.isArray(d.buttons) && d.buttons.length > 0) {
+      d.buttons.forEach(b => addCustomButtonField(b.text, b.link, b.style));
+    } else if(d.buttonText || d.orderLink) {
+      addCustomButtonField(d.buttonText || 'Order Now', d.orderLink || '', 'gold');
+    } else {
+      addCustomButtonField('Order Now', '', 'gold');
+    }
+  }
+
   switchImgTab('url');
   document.querySelectorAll('.admin-tab')[0].click();
   const publishBtn = document.getElementById('publish-btn');
@@ -2381,6 +2430,21 @@ function renderPosts(posts) {
     const imgHtml = post.imageUrl
       ? `<div style="overflow:hidden;"><img src="${escHtml(post.imageUrl)}" class="post-img" alt="${escHtml(post.title)}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/><div class="post-img-placeholder" style="display:none;">🎨</div></div>`
       : `<div style="overflow:hidden;"><div class="post-img-placeholder">🎨</div></div>`;
+    
+    let buttonsHtml = '';
+    if(post.buttons && Array.isArray(post.buttons) && post.buttons.length > 0) {
+      buttonsHtml = `<div class="card-buttons-group" style="display:flex; flex-direction:column; gap:6px; margin-top:auto;">` +
+        post.buttons.map(b => getCardButtonHtml(b, post)).join('') +
+        `</div>`;
+    } else {
+      const btnText = post.buttonText || 'Take a look 👀';
+      if(post.orderLink) {
+        buttonsHtml = `<div class="card-buttons-group" style="display:flex; flex-direction:column; gap:6px; margin-top:auto;"><a href="${escHtml(post.orderLink)}" target="_blank" class="btn-order" onclick="event.stopPropagation();">${escHtml(btnText)}</a></div>`;
+      } else {
+        buttonsHtml = `<div class="card-buttons-group" style="display:flex; flex-direction:column; gap:6px; margin-top:auto;"><button type="button" class="btn-order" onclick="openPostView('${post.id}'); event.stopPropagation();">${escHtml(btnText)}</button></div>`;
+      }
+    }
+
     card.innerHTML = `
       ${imgHtml}
       <div class="post-body">
@@ -2388,7 +2452,7 @@ function renderPosts(posts) {
         <div class="post-title">${escHtml(post.title)}</div>
         <div class="post-desc">${escHtml(post.description || '')}</div>
         <div class="post-price gold-text">${priceStr}</div>
-        <button class="btn-order" onclick="openPostView('${post.id}'); event.stopPropagation();">Take a look 👀</button>
+        ${buttonsHtml}
       </div>
     `;
     grid.appendChild(card);
@@ -2422,6 +2486,31 @@ function showPostView(post) {
 
   document.getElementById('pv-price').textContent = formatPrice(post.price);
 
+  const buttonsContainer = document.getElementById('pv-buttons');
+  if(buttonsContainer) {
+    buttonsContainer.innerHTML = '';
+    if(post.buttons && Array.isArray(post.buttons) && post.buttons.length > 0) {
+      buttonsContainer.innerHTML = post.buttons.map(b => {
+        const styleClass = (b.style && b.style !== 'gold') ? 'custom-btn-' + b.style : '';
+        const text = b.text || 'Take a look 👀';
+        const link = b.link || '';
+        if(!link || link === '#') {
+          return `<button type="button" class="btn-gold ${styleClass}" onclick="closePostView()" style="cursor:pointer; border:none;">${escHtml(text)}</button>`;
+        }
+        const isJS = link.startsWith('javascript:');
+        const target = isJS ? '' : 'target="_blank" rel="noopener noreferrer"';
+        return `<a href="${escHtml(link)}" ${target} class="btn-gold ${styleClass}" style="text-decoration:none;">${escHtml(text)}</a>`;
+      }).join('');
+    } else {
+      const btnText = post.buttonText || 'Take a look 👀';
+      let href = post.orderLink;
+      if(!href) {
+        href = 'mailto:classiceditsco@gmail.com?subject=Order: ' + encodeURIComponent(post.title || '');
+      }
+      buttonsContainer.innerHTML = `<a href="${escHtml(href)}" target="_blank" class="btn-gold" style="text-decoration:none;">${escHtml(btnText)}</a>`;
+    }
+  }
+
   const img = document.getElementById('pv-img');
   const placeholder = document.getElementById('pv-img-placeholder');
   if(post.imageUrl) {
@@ -2435,13 +2524,7 @@ function showPostView(post) {
   }
 
   const orderBtn = document.getElementById('pv-order-btn');
-  orderBtn.textContent = post.buttonText || 'Take a look 👀';
-  if(post.orderLink) {
-    orderBtn.href = post.orderLink;
-  } else {
-    orderBtn.href = 'mailto:classiceditsco@gmail.com?subject=Order: ' + encodeURIComponent(post.title);
-  }
-  orderBtn.style.display = 'inline-block';
+  if(orderBtn) orderBtn.style.display = 'none';
 
   document.getElementById('post-view').classList.add('open');
   document.title = post.title + ' – Classic Creative Base59';
@@ -2527,6 +2610,51 @@ function showToast(msg, type) {
 // ============================================================
 // HELPERS
 // ============================================================
+
+function addCustomButtonField(text = '', link = '', style = 'gold') {
+  const list = document.getElementById('custom-buttons-list');
+  if(!list) return;
+  const item = document.createElement('div');
+  item.className = 'custom-btn-item';
+  item.style.cssText = 'background:var(--light); border:1px solid rgba(10,37,64,0.15); padding:14px; border-radius:12px; position:relative;';
+  item.innerHTML = `
+    <button type="button" onclick="this.closest('.custom-btn-item').remove()" title="Remove button" style="position:absolute; right:10px; top:10px; background:rgba(220,38,38,0.1); color:#dc2626; border:none; width:26px; height:26px; border-radius:50%; cursor:pointer; font-weight:bold; display:flex; align-items:center; justify-content:center;">✕</button>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:10px; padding-right:30px;">
+      <div>
+        <label style="font-size:0.75rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.5px; display:block; margin-bottom:4px;">Button Text *</label>
+        <input type="text" class="form-input btn-text-input" placeholder="e.g. Order Now / Download" value="${escHtml(text)}"/>
+      </div>
+      <div>
+        <label style="font-size:0.75rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.5px; display:block; margin-bottom:4px;">Button Style</label>
+        <select class="form-select btn-style-input" style="padding:11px 14px; border-radius:10px;">
+          <option value="gold" ${style==='gold'?'selected':''}>⭐ Gold / Primary</option>
+          <option value="blue" ${style==='blue'?'selected':''}>🔵 Blue</option>
+          <option value="green" ${style==='green'?'selected':''}>🟢 Green (WhatsApp)</option>
+          <option value="red" ${style==='red'?'selected':''}>🔴 Red</option>
+          <option value="dark" ${style==='dark'?'selected':''}>⚫ Dark Gray</option>
+        </select>
+      </div>
+    </div>
+    <div>
+      <label style="font-size:0.75rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.5px; display:block; margin-bottom:4px;">Button Link URL</label>
+      <input type="text" class="form-input btn-link-input" placeholder="https://wa.me/... or https://drive.google.com/..." value="${escHtml(link)}"/>
+    </div>
+  `;
+  list.appendChild(item);
+}
+
+function getCardButtonHtml(b, post) {
+  const styleClass = (b.style && b.style !== 'gold') ? 'custom-btn-' + b.style : '';
+  const text = b.text || 'Take a look 👀';
+  const link = b.link || '';
+  
+  if(!link || link === '#') {
+    return `<button type="button" class="btn-order ${styleClass}" onclick="openPostView('${post.id}'); event.stopPropagation();">${escHtml(text)}</button>`;
+  }
+  const isJS = link.startsWith('javascript:');
+  const target = isJS ? '' : 'target="_blank" rel="noopener noreferrer"';
+  return `<a href="${escHtml(link)}" ${target} class="btn-order ${styleClass}" onclick="event.stopPropagation();">${escHtml(text)}</a>`;
+}
 
 function formatPrice(price) {
   if(price === null || price === undefined || price === '') return 'Price on request';
@@ -2670,6 +2798,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setLogos();
   initTrustAnimations();
   loadPosts().then(() => checkDirectPostUrl());
+  resetPostForm();
 
   // Enter key on login
   document.getElementById('login-pass').addEventListener('keydown', e => {
